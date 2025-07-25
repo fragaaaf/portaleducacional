@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ SQL para Iniciantes - Desvendando o Banco de Dados!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos convertidos de Tailwind CSS e personalizados */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f8ff; /* Azul clarinho divertido */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Alinha no topo para não ficar centralizado verticalmente em telas grandes */
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .faq-container {
+            background-color: #ffffff;
+            border-radius: 20px; /* Cantos mais arredondados (Tailwind rounded-2xl) */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Equivalente a shadow-md mais forte */
+            width: 100%; /* Tailwind w-full */
+            max-width: 900px; /* Tailwind max-w-[900px] */
+            overflow: hidden;
+            margin-top: 20px; /* Espaço do topo */
+            margin-bottom: 20px; /* Espaço da base */
+        }
+        .faq-item {
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+        .faq-header {
+            background-color: #6a0dad; /* Roxo vibrante */
+            color: white;
+            padding: 18px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600; /* Tailwind font-semibold */
+            font-size: 1.15rem; /* Um pouco maior */
+            border-radius: 20px 20px 0 0; /* Cantos arredondados no topo (Tailwind rounded-t-2xl) */
+            transition: background-color 0.3s ease;
+        }
+        .faq-header:hover {
+            background-color: #8a2be2; /* Roxo mais claro no hover */
+        }
+        .faq-header.active {
+            background-color: #4b0082; /* Roxo mais escuro quando ativo */
+        }
+        .faq-header .icon {
+            width: 1.2em; /* Tamanho do SVG */
+            height: 1.2em; /* Tamanho do SVG */
+            fill: currentColor; /* Cor do ícone igual à cor do texto pai */
+            transition: transform 0.3s ease;
+        }
+        .faq-header.active .icon {
+            transform: rotate(180deg);
+        }
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            background-color: #f9f9f9; /* Fundo leve para o conteúdo */
+            padding: 0 25px; /* Padding horizontal fixo */
+        }
+        .faq-content.open {
+            max-height: 2000px; /* Valor grande o suficiente para a maioria dos conteúdos */
+            padding: 20px 25px; /* Padding quando aberto */
+        }
+        .faq-content p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .faq-content h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #6a0dad; /* Roxo vibrante */
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .faq-content ul {
+            list-style: disc;
+            margin-left: 25px;
+            margin-bottom: 15px;
+            color: #555;
+        }
+        .faq-content ul li {
+            margin-bottom: 8px;
+        }
+
+        /* Estilo para blocos de código */
+        pre {
+            background-color: #2d2d2d; /* Fundo escuro para código */
+            color: #f8f8f2; /* Cor clara para o texto */
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace; /* Fonte monoespaçada */
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        code {
+            font-family: inherit;
+        }
+
+        /* Estilos para o título principal */
+        .main-title {
+            font-size: 2.25rem; /* Tailwind text-4xl */
+            font-weight: 700; /* Tailwind font-bold */
+            text-align: center; /* Tailwind text-center */
+            color: #6a0dad; /* Tailwind text-purple-700 */
+            margin-bottom: 2rem; /* Tailwind mb-8 */
+            padding: 1.5rem; /* Tailwind p-6 */
+            background-color: #ede9fe; /* Tailwind bg-purple-100 */
+            border-top-left-radius: 1rem; /* Tailwind rounded-t-2xl */
+            border-top-right-radius: 1rem; /* Tailwind rounded-t-2xl */
+        }
+
+        /* Estilos para tabelas de exemplo (antes/depois) */
+        .table-example {
+            margin: 20px 0;
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+        .table-example th, .table-example td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        .table-example th {
+            background-color: #e0e0e0;
+            font-weight: bold;
+        }
+        .table-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap; /* Permite que as tabelas quebrem a linha em telas pequenas */
+        }
+        .table-box {
+            flex: 1;
+            min-width: 280px; /* Garante um tamanho mínimo para cada tabela */
+        }
+        .table-box h4 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #4b0082;
+            font-weight: 600;
+        }
+
+
+        /* Responsividade básica */
+        @media (max-width: 768px) {
+            .faq-header {
+                font-size: 1rem;
+                padding: 15px 20px;
+            }
+            .faq-content.open {
+                padding: 15px 20px;
+            }
+            pre {
+                font-size: 0.85rem;
+            }
+            .main-title {
+                font-size: 1.75rem; /* Ajuste para telas menores */
+                padding: 1rem;
+            }
+            .table-container {
+                flex-direction: column; /* Empilha as tabelas em telas pequenas */
+                align-items: center;
+            }
+            .table-box {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="faq-container">
+        <h1 class="main-title">
+            🎉 FAQ SQL para Iniciantes: Desvendando o Banco de Dados! 🎉
+        </h1>
+
+        <div class="faq-item">
+            <div class="faq-header">
+                O que é SQL e por que ele é tão importante?
+                <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="faq-content">
+                <p>SQL (Structured Query Language) é a linguagem padrão para gerenciar e manipular bancos de dados relacionais. Pense nele como o "idioma" que você usa para conversar com o banco de dados, pedindo informações, inserindo novos dados, atualizando registros ou organizando tudo. É crucial porque a maioria das aplicações (sites, apps, sistemas corporativos) usa bancos de dados para armazenar suas informações, e o SQL é a ponte para acessá-las!</p>
+                <p>É como ter uma biblioteca gigantesca: o SQL é a linguagem que você usa para pedir um livro específico, catalogar um novo, mudar o local de um livro ou até mesmo remover um que foi perdido.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-header">
+                Como eu crio um novo Banco de Dados? (CREATE DATABASE)
+                <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="faq-content">
+                <p>Criar um banco de dados é como construir um novo armário vazio para guardar suas coleções. É o primeiro passo para organizar seus dados.</p>
+                <h3>Exemplo:</h3>
+                <pre><code class="sql">
+CREATE DATABASE MinhaLoja;
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li><code>CREATE DATABASE</code>: São as palavras-chave que indicam ao SQL que você quer criar um novo banco de dados.</li>
+                    <li><code>MinhaLoja</code>: É o nome que você está dando ao seu novo banco de dados. Escolha um nome que seja descritivo para o propósito do banco.</li>
+                </ul>
+                <p>Este comando simples cria um novo banco de dados chamado <code>MinhaLoja</code>, pronto para receber suas tabelas e dados.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-header">
+                Como eu crio uma Tabela dentro do Banco de Dados? (CREATE TABLE)
+                <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="faq-content">
+                <p>Depois de ter o armário (banco de dados), você precisa das gavetas (tabelas) para organizar os itens. Cada gaveta tem um nome e divisórias (colunas) para tipos específicos de coisas.</p>
+                <h3>Exemplo: Criando a tabela 'Produtos'</h3>
+                <pre><code class="sql">
+CREATE TABLE Produtos (
+    id INT PRIMARY KEY, -- Identificador único do produto, chave primária
+    nome VARCHAR(100) NOT NULL UNIQUE, -- Nome do produto, não pode ser nulo e deve ser único
+    preco DECIMAL(10, 2), -- Preço do produto, com 10 dígitos no total e 2 casas decimais
+    data_cadastro DATE -- Data em que o produto foi cadastrado
+);
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li><code>CREATE TABLE</code>: Palavras-chave para criar uma nova tabela.</li>
+                    <li><code>Produtos</code>: O nome da tabela que você está criando.</li>
+                    <li><code>( ... )</code>: Parênteses que contêm as definições das colunas da tabela.</li>
+                    <li><code>id INT PRIMARY KEY</code>: Define uma coluna chamada <code>id</code> do tipo inteiro (<code>INT</code>). <code>PRIMARY KEY</code> significa que cada <code>id</code> deve ser único e não nulo, e serve como identificador principal para cada linha da tabela.</li>
+                    <li><code>nome VARCHAR(100) NOT NULL UNIQUE</code>: Define a coluna <code>nome</code> como texto variável de até 100 caracteres. <code>NOT NULL</code> significa que essa coluna não pode ficar vazia. <code>UNIQUE</code> garante que cada nome de produto seja diferente.</li>
+                    <li><code>preco DECIMAL(10, 2)</code>: Define a coluna <code>preco</code> como um número decimal. <code>10</code> é o número total de dígitos que o número pode ter, e <code>2</code> é o número de casas decimais.</li>
+                    <li><code>data_cadastro DATE</code>: Define a coluna <code>data_cadastro</code> para armazenar datas.</li>
+                </ul>
+                <p>Aqui, definimos a tabela <code>Produtos</code> com quatro colunas e suas regras (restrições) para garantir que os dados sejam bem organizados.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-header">
+                Como faço operações CRUD em uma única Tabela?
+                <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="faq-content">
+                <p>CRUD significa Create (Criar), Read (Ler), Update (Atualizar) e Delete (Deletar). São as quatro operações básicas que você faz com os dados em suas tabelas.</p>
+
+                <h3>1. Criar Dados (INSERT)</h3>
+                <p>É como adicionar um novo item na sua gaveta de produtos.</p>
+                <h4>Exemplo 1: Inserindo todos os valores</h4>
+                <pre><code class="sql">
+INSERT INTO Produtos (id, nome, preco, data_cadastro)
+VALUES (1, 'Smartphone X', 1500.00, '2023-01-15');
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li><code>INSERT INTO Produtos</code>: Indica que você quer inserir dados na tabela <code>Produtos</code>.</li>
+                    <li><code>(id, nome, preco, data_cadastro)</code>: Lista as colunas nas quais você vai inserir os valores. É uma boa prática sempre especificá-las.</li>
+                    <li><code>VALUES (1, 'Smartphone X', 1500.00, '2023-01-15')</code>: Fornece os valores correspondentes para cada coluna na ordem especificada. Strings (textos) e datas devem estar entre aspas simples.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Antes do INSERT</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <!-- Tabela vazia ou com outros dados iniciais, se houver -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Depois do INSERT</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1500.00</td><td>2023-01-15</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h4>Exemplo 2: Inserindo apenas nome e preço (assumindo ID auto-incremento e data padrão)</h4>
+                <pre><code class="sql">
+INSERT INTO Produtos (nome, preco)
+VALUES ('Fone de Ouvido Bluetooth', 250.50);
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li>Aqui, omitimos <code>id</code> e <code>data_cadastro</code> na lista de colunas. Isso funciona se <code>id</code> for auto-incremento (o banco gera o valor) e <code>data_cadastro</code> tiver um valor padrão ou permitir nulos.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Antes do INSERT</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1500.00</td><td>2023-01-15</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Depois do INSERT (Exemplo de ID auto-gerado)</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1500.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Bluetooth</td><td>250.50</td><td>NULL/Padrão</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h4>Exemplo 3: Inserindo múltiplos produtos de uma vez</h4>
+                <pre><code class="sql">
+INSERT INTO Produtos (id, nome, preco, data_cadastro)
+VALUES
+(3, 'Smart TV 50 polegadas', 2800.00, '2023-02-01'),
+(4, 'Webcam Full HD', 120.00, '2023-02-05');
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li>Você pode inserir várias linhas em uma única instrução <code>INSERT</code> separando os conjuntos de <code>VALUES</code> por vírgulas.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Antes do INSERT</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1500.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Bluetooth</td><td>250.50</td><td>NULL/Padrão</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Depois do INSERT</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1500.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Bluetooth</td><td>250.50</td><td>NULL/Padrão</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>120.00</td><td>2023-02-05</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h4>Exemplo 4: Inserindo um produto sem preço definido (se a coluna permitir NULL)</h4>
+                <pre><code class="sql">
+INSERT INTO Produtos (id, nome, data_cadastro)
+VALUES (5, 'Câmera Fotográfica', '2023-03-10');
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li>Se uma coluna permite valores nulos (não tem a restrição <code>NOT NULL</code>), você pode omiti-la na lista de colunas e o banco de dados preencherá com <code>NULL</code>.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Antes do INSERT</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1500.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Bluetooth</td><td>250.50</td><td>NULL/Padrão</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>120.00</td><td>2023-02-05</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Depois do INSERT</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1500.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Bluetooth</td><td>250.50</td><td>NULL/Padrão</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>120.00</td><td>2023-02-05</td></tr>
+                                <tr><td>5</td><td>Câmera Fotográfica</td><td>NULL</td><td>2023-03-10</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h4>Exemplo 5: Inserindo um produto com um ID específico (se não for auto-incremento)</h4>
+                <pre><code class="sql">
+INSERT INTO Produtos (id, nome, preco, data_cadastro)
+VALUES (6, 'Monitor Gamer 27"', 999.99, '2023-03-20');
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li>Se a coluna <code>id</code> não for auto-incremento, você deve fornecer um valor para ela. Certifique-se de que o valor seja único para evitar erros de chave primária.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Antes do INSERT</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1500.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Bluetooth</td><td>250.50</td><td>NULL/Padrão</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>120.00</td><td>2023-02-05</td></tr>
+                                <tr><td>5</td><td>Câmera Fotográfica</td><td>NULL</td><td>2023-03-10</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Depois do INSERT</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1500.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Bluetooth</td><td>250.50</td><td>NULL/Padrão</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>120.00</td><td>2023-02-05</td></tr>
+                                <tr><td>5</td><td>Câmera Fotográfica</td><td>NULL</td><td>2023-03-10</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h3>2. Ler Dados (SELECT)</h3>
+                <p>É como olhar dentro da sua gaveta para ver o que tem lá.</p>
+                <h4>Exemplo 1: Selecionar todas as colunas de todos os produtos</h4>
+                <pre><code class="sql">
+SELECT * FROM Produtos;
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li><code>SELECT *</code>: O asterisco (<code>*</code>) significa "todas as colunas".</li>
+                    <li><code>FROM Produtos</code>: Indica de qual tabela você quer recuperar os dados.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Produtos (Estado Atual)</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1500.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Bluetooth</td><td>250.50</td><td>NULL/Padrão</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>120.00</td><td>2023-02-05</td></tr>
+                                <tr><td>5</td><td>Câmera Fotográfica</td><td>NULL</td><td>2023-03-10</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Resultado do SELECT</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1500.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Bluetooth</td><td>250.50</td><td>NULL/Padrão</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>120.00</td><td>2023-02-05</td></tr>
+                                <tr><td>5</td><td>Câmera Fotográfica</td><td>NULL</td><td>2023-03-10</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h4>Exemplo 2: Selecionar apenas o nome e o preço dos produtos</h4>
+                <pre><code class="sql">
+SELECT nome, preco FROM Produtos;
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li><code>SELECT nome, preco</code>: Você lista as colunas específicas que deseja ver, separadas por vírgula.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Produtos (Estado Atual)</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1500.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Bluetooth</td><td>250.50</td><td>NULL/Padrão</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>120.00</td><td>2023-02-05</td></tr>
+                                <tr><td>5</td><td>Câmera Fotográfica</td><td>NULL</td><td>2023-03-10</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Resultado do SELECT</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>nome</th><th>preco</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Smartphone X</td><td>1500.00</td></tr>
+                                <tr><td>Fone de Ouvido Bluetooth</td><td>250.50</td></tr>
+                                <tr><td>Smart TV 50 polegadas</td><td>2800.00</td></tr>
+                                <tr><td>Webcam Full HD</td><td>120.00</td></tr>
+                                <tr><td>Câmera Fotográfica</td><td>NULL</td></tr>
+                                <tr><td>Monitor Gamer 27"</td><td>999.99</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h4>Exemplo 3: Selecionar produtos com preço acima de 500.00</h4>
+                <pre><code class="sql">
+SELECT nome, preco FROM Produtos WHERE preco > 500.00;
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li><code>WHERE preco > 500.00</code>: A cláusula <code>WHERE</code> é usada para filtrar as linhas. Apenas as linhas onde o <code>preco</code> é maior que 500.00 serão retornadas.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Produtos (Estado Atual)</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1500.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Bluetooth</td><td>250.50</td><td>NULL/Padrão</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>120.00</td><td>2023-02-05</td></tr>
+                                <tr><td>5</td><td>Câmera Fotográfica</td><td>NULL</td><td>2023-03-10</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Resultado do SELECT</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>nome</th><th>preco</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Smartphone X</td><td>1500.00</td></tr>
+                                <tr><td>Smart TV 50 polegadas</td><td>2800.00</td></tr>
+                                <tr><td>Monitor Gamer 27"</td><td>999.99</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h4>Exemplo 4: Selecionar produtos cadastrados em 2023</h4>
+                <pre><code class="sql">
+SELECT * FROM Produtos WHERE data_cadastro BETWEEN '2023-01-01' AND '2023-12-31';
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li><code>BETWEEN 'data_inicial' AND 'data_final'</code>: Este operador é usado para filtrar valores dentro de um determinado intervalo (inclusivo).</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Produtos (Estado Atual)</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1500.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Bluetooth</td><td>250.50</td><td>NULL/Padrão</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>120.00</td><td>2023-02-05</td></tr>
+                                <tr><td>5</td><td>Câmera Fotográfica</td><td>NULL</td><td>2023-03-10</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Resultado do SELECT</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1500.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Bluetooth</td><td>250.50</td><td>NULL/Padrão</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>120.00</td><td>2023-02-05</td></tr>
+                                <tr><td>5</td><td>Câmera Fotográfica</td><td>NULL</td><td>2023-03-10</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h4>Exemplo 5: Selecionar produtos cujo nome começa com 'S' e ordenar por preço</h4>
+                <pre><code class="sql">
+SELECT id, nome, preco FROM Produtos
+WHERE nome LIKE 'S%'
+ORDER BY preco DESC;
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li><code>WHERE nome LIKE 'S%'</code>: Usa o operador <code>LIKE</code> com o curinga <code>%</code> para encontrar nomes que começam com a letra 'S'.</li>
+                    <li><code>ORDER BY preco DESC</code>: Ordena o resultado pela coluna <code>preco</code> em ordem decrescente (do maior para o menor). <code>ASC</code> seria para ordem crescente.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Produtos (Estado Atual)</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1500.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Bluetooth</td><td>250.50</td><td>NULL/Padrão</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>120.00</td><td>2023-02-05</td></tr>
+                                <tr><td>5</td><td>Câmera Fotográfica</td><td>NULL</td><td>2023-03-10</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Resultado do SELECT</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1500.00</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h3>3. Atualizar Dados (UPDATE)</h3>
+                <p>É como mudar a etiqueta de preço de um item na sua gaveta.</p>
+                <h4>Exemplo 1: Atualizar o preço de um produto específico (pelo ID)</h4>
+                <pre><code class="sql">
+UPDATE Produtos
+SET preco = 1450.00
+WHERE id = 1; -- Smartphone X
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li><code>UPDATE Produtos</code>: Indica a tabela que você quer atualizar.</li>
+                    <li><code>SET preco = 1450.00</code>: Define a nova valor para a coluna <code>preco</code>.</li>
+                    <li><code>WHERE id = 1</code>: A cláusula <code>WHERE</code> é crucial! Ela especifica qual(is) linha(s) devem ser atualizadas. Sem ela, *todos* os registros da tabela seriam atualizados.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Antes do UPDATE</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1500.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Bluetooth</td><td>250.50</td><td>NULL/Padrão</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>120.00</td><td>2023-02-05</td></tr>
+                                <tr><td>5</td><td>Câmera Fotográfica</td><td>NULL</td><td>2023-03-10</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Depois do UPDATE</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1450.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Bluetooth</td><td>250.50</td><td>NULL/Padrão</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>120.00</td><td>2023-02-05</td></tr>
+                                <tr><td>5</td><td>Câmera Fotográfica</td><td>NULL</td><td>2023-03-10</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h4>Exemplo 2: Atualizar o nome e a data de cadastro de um produto</h4>
+                <pre><code class="sql">
+UPDATE Produtos
+SET nome = 'Fone de Ouvido Sem Fio', data_cadastro = '2023-01-20'
+WHERE id = 2; -- Fone de Ouvido Bluetooth
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li>Você pode atualizar múltiplas colunas em uma única instrução <code>SET</code>, separando-as por vírgula.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Antes do UPDATE</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1450.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Bluetooth</td><td>250.50</td><td>NULL/Padrão</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>120.00</td><td>2023-02-05</td></tr>
+                                <tr><td>5</td><td>Câmera Fotográfica</td><td>NULL</td><td>2023-03-10</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Depois do UPDATE</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1450.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Sem Fio</td><td>250.50</td><td>2023-01-20</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>120.00</td><td>2023-02-05</td></tr>
+                                <tr><td>5</td><td>Câmera Fotográfica</td><td>NULL</td><td>2023-03-10</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h4>Exemplo 3: Aumentar o preço de todos os produtos com preço abaixo de 200.00 em 10%</h4>
+                <pre><code class="sql">
+UPDATE Produtos
+SET preco = preco * 1.10
+WHERE preco < 200.00;
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li>Você pode usar expressões matemáticas na cláusula <code>SET</code>.</li>
+                    <li>A condição <code>WHERE</code> garante que apenas os produtos que atendem ao critério sejam afetados.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Antes do UPDATE</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1450.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Sem Fio</td><td>250.50</td><td>2023-01-20</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>120.00</td><td>2023-02-05</td></tr>
+                                <tr><td>5</td><td>Câmera Fotográfica</td><td>NULL</td><td>2023-03-10</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Depois do UPDATE</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1450.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Sem Fio</td><td>250.50</td><td>2023-01-20</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>132.00</td><td>2023-02-05</td></tr>
+                                <tr><td>5</td><td>Câmera Fotográfica</td><td>NULL</td><td>2023-03-10</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h4>Exemplo 4: Definir o preço de produtos sem preço para um valor padrão</h4>
+                <pre><code class="sql">
+UPDATE Produtos
+SET preco = 50.00
+WHERE preco IS NULL;
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li><code>WHERE preco IS NULL</code>: Filtra as linhas onde a coluna <code>preco</code> não tem valor definido (é nula).</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Antes do UPDATE</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1450.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Sem Fio</td><td>250.50</td><td>2023-01-20</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>132.00</td><td>2023-02-05</td></tr>
+                                <tr><td>5</td><td>Câmera Fotográfica</td><td>NULL</td><td>2023-03-10</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Depois do UPDATE</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1450.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Sem Fio</td><td>250.50</td><td>2023-01-20</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>132.00</td><td>2023-02-05</td></tr>
+                                <tr><td>5</td><td>Câmera Fotográfica</td><td>50.00</td><td>2023-03-10</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h4>Exemplo 5: Atualizar a data de cadastro para produtos que não foram vendidos em 2023</h4>
+                <pre><code class="sql">
+UPDATE Produtos
+SET data_cadastro = '2024-01-01'
+WHERE data_cadastro NOT BETWEEN '2023-01-01' AND '2023-12-31';
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li><code>NOT BETWEEN ... AND ...</code>: Filtra as linhas que *não* estão dentro do intervalo de datas especificado.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Antes do UPDATE</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1450.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Sem Fio</td><td>250.50</td><td>2023-01-20</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>132.00</td><td>2023-02-05</td></tr>
+                                <tr><td>5</td><td>Câmera Fotográfica</td><td>50.00</td><td>2023-03-10</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Depois do UPDATE (Neste exemplo, nenhuma linha será alterada se todas as datas já estiverem em 2023)</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1450.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Sem Fio</td><td>250.50</td><td>2023-01-20</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>132.00</td><td>2023-02-05</td></tr>
+                                <tr><td>5</td><td>Câmera Fotográfica</td><td>50.00</td><td>2023-03-10</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h3>4. Deletar Dados (DELETE)</h3>
+                <p>É como jogar fora um item da sua gaveta que você não quer mais.</p>
+                <h4>Exemplo 1: Deletar um produto específico pelo ID</h4>
+                <pre><code class="sql">
+DELETE FROM Produtos WHERE id = 5; -- Câmera Fotográfica
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li><code>DELETE FROM Produtos</code>: Indica que você quer deletar linhas da tabela <code>Produtos</code>.</li>
+                    <li><code>WHERE id = 5</code>: A cláusula <code>WHERE</code> é essencial para especificar qual(is) linha(s) devem ser removidas. Sem ela, *todas* as linhas da tabela seriam deletadas!</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Antes do DELETE</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1450.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Sem Fio</td><td>250.50</td><td>2023-01-20</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>132.00</td><td>2023-02-05</td></tr>
+                                <tr><td>5</td><td>Câmera Fotográfica</td><td>50.00</td><td>2023-03-10</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Depois do DELETE</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1450.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Sem Fio</td><td>250.50</td><td>2023-01-20</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>132.00</td><td>2023-02-05</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h4>Exemplo 2: Deletar todos os produtos com preço abaixo de 100.00</h4>
+                <pre><code class="sql">
+DELETE FROM Produtos WHERE preco < 100.00;
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li>A condição <code>WHERE preco < 100.00</code> garante que apenas os produtos com preço inferior a 100.00 sejam removidos.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Antes do DELETE</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1450.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Sem Fio</td><td>250.50</td><td>2023-01-20</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>132.00</td><td>2023-02-05</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Produtos: Depois do DELETE (Neste exemplo, nenhuma linha será alterada se não houver produtos com preço < 100.00)</h4>
+                        <table class="table-example">
+                            <thead>
+                                <tr><th>id</th><th>nome</th><th>preco</th><th>data_cadastro</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Smartphone X</td><td>1450.00</td><td>2023-01-15</td></tr>
+                                <tr><td>2</td><td>Fone de Ouvido Sem Fio</td><td>250.50</td><td>2023-01-20</td></tr>
+                                <tr><td>3</td><td>Smart TV 50 polegadas</td><td>2800.00</td><td>2023-02-01</td></tr>
+                                <tr><td>4</td><td>Webcam Full HD</td><td>132.00</td><td>2023-02-05</td></tr>
+                                <tr><td>6</td><td>Monitor Gamer 27"</td><td>999.99</td><td>2023-03-20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-header">
+                CRUD para Duas Tabelas com Cardinalidade 1:1
+                <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="faq-content">
+                <p>Em um relacionamento 1:1 (um para um), cada registro em uma tabela corresponde a exatamente um registro em outra tabela. Pense em um funcionário e seu crachá: um funcionário tem um crachá, e um crachá pertence a um único funcionário.</p>
+                <h3>Estrutura das Tabelas:</h3>
+                <pre><code class="sql">
+CREATE TABLE Funcionarios (
+    id_funcionario INT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Crachas (
+    id_cracha INT PRIMARY KEY,
+    id_funcionario INT UNIQUE, -- Garante o 1:1: um crachá para um funcionário
+    data_emissao DATE,
+    FOREIGN KEY (id_funcionario) REFERENCES Funcionarios(id_funcionario)
+);
+                </code></pre>
+
+                <h3>1. Criar Dados (INSERT)</h3>
+                <p>Você insere o funcionário e, em seguida, o crachá, ligando-o ao funcionário.</p>
+                <pre><code class="sql">
+-- Inserir um funcionário
+INSERT INTO Funcionarios (id_funcionario, nome) VALUES (101, 'Ana Paula');
+-- Inserir o crachá para Ana Paula
+INSERT INTO Crachas (id_cracha, id_funcionario, data_emissao) VALUES (2001, 101, '2023-04-01');
+                </code></pre>
+                <p><strong>Explicação dos Comandos:</strong></p>
+                <ul>
+                    <li>Primeiro, inserimos o funcionário na tabela <code>Funcionarios</code>.</li>
+                    <li>Em seguida, inserimos o crachá na tabela <code>Crachas</code>. O valor de <code>id_funcionario</code> no <code>INSERT</code> de <code>Crachas</code> (<code>101</code>) deve corresponder a um <code>id_funcionario</code> existente na tabela <code>Funcionarios</code>, estabelecendo o vínculo.</li>
+                    <li>A restrição <code>UNIQUE</code> na coluna <code>id_funcionario</code> da tabela <code>Crachas</code> garante que um funcionário só possa ter um crachá.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Funcionarios: Antes do INSERT</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_funcionario</th><th>nome</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                        <h4>Tabela Crachas: Antes do INSERT</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_cracha</th><th>id_funcionario</th><th>data_emissao</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Funcionarios: Depois do INSERT</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_funcionario</th><th>nome</th></tr></thead>
+                            <tbody><tr><td>101</td><td>Ana Paula</td></tr></tbody>
+                        </table>
+                        <h4>Tabela Crachas: Depois do INSERT</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_cracha</th><th>id_funcionario</th><th>data_emissao</th></tr></thead>
+                            <tbody><tr><td>2001</td><td>101</td><td>2023-04-01</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h3>2. Ler Dados (SELECT com JOIN)</h3>
+                <p>Para ver as informações combinadas, usamos <code>JOIN</code>.</p>
+                <pre><code class="sql">
+-- Listar funcionários e seus respectivos crachás
+SELECT
+    F.nome,
+    C.id_cracha,
+    C.data_emissao
+FROM
+    Funcionarios AS F
+JOIN
+    Crachas AS C ON F.id_funcionario = C.id_funcionario;
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li><code>SELECT F.nome, C.id_cracha, C.data_emissao</code>: Seleciona colunas de ambas as tabelas. Usamos aliases (<code>F.</code> para Funcionarios, <code>C.</code> para Crachas) para clareza.</li>
+                    <li><code>FROM Funcionarios AS F</code>: Inicia a consulta na tabela <code>Funcionarios</code>, dando a ela o apelido <code>F</code>.</li>
+                    <li><code>JOIN Crachas AS C ON F.id_funcionario = C.id_funcionario</code>: Conecta (une) a tabela <code>Funcionarios</code> com a tabela <code>Crachas</code>. A condição <code>ON F.id_funcionario = C.id_funcionario</code> especifica como as linhas das duas tabelas se relacionam (onde o ID do funcionário é o mesmo em ambas).</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Funcionarios (Estado Atual)</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_funcionario</th><th>nome</th></tr></thead>
+                            <tbody><tr><td>101</td><td>Ana Paula</td></tr></tbody>
+                        </table>
+                        <h4>Tabela Crachas (Estado Atual)</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_cracha</th><th>id_funcionario</th><th>data_emissao</th></tr></thead>
+                            <tbody><tr><td>2001</td><td>101</td><td>2023-04-01</td></tr></tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Resultado do SELECT</h4>
+                        <table class="table-example">
+                            <thead><tr><th>nome</th><th>id_cracha</th><th>data_emissao</th></tr></thead>
+                            <tbody><tr><td>Ana Paula</td><td>2001</td><td>2023-04-01</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h3>3. Atualizar Dados (UPDATE)</h3>
+                <p>Atualizar dados em uma tabela não afeta a outra diretamente, a menos que seja a chave estrangeira (o que é raro e desaconselhável).</p>
+                <h4>Exemplo 1: Atualizar o nome de um funcionário</h4>
+                <pre><code class="sql">
+UPDATE Funcionarios SET nome = 'Ana Paula Silva' WHERE id_funcionario = 101;
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li><code>UPDATE Funcionarios</code>: Indica a tabela a ser atualizada.</li>
+                    <li><code>SET nome = 'Ana Paula Silva'</code>: Define o novo valor para a coluna <code>nome</code>.</li>
+                    <li><code>WHERE id_funcionario = 101</code>: Garante que apenas o funcionário com o ID especificado seja atualizado.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Funcionarios: Antes do UPDATE</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_funcionario</th><th>nome</th></tr></thead>
+                            <tbody><tr><td>101</td><td>Ana Paula</td></tr></tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Funcionarios: Depois do UPDATE</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_funcionario</th><th>nome</th></tr></thead>
+                            <tbody><tr><td>101</td><td>Ana Paula Silva</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h4>Exemplo 2: Atualizar a data de emissão de um crachá</h4>
+                <pre><code class="sql">
+UPDATE Crachas SET data_emissao = '2024-01-01' WHERE id_cracha = 2001;
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li>Similar ao exemplo anterior, mas atualizando uma coluna na tabela <code>Crachas</code>.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Crachas: Antes do UPDATE</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_cracha</th><th>id_funcionario</th><th>data_emissao</th></tr></thead>
+                            <tbody><tr><td>2001</td><td>101</td><td>2023-04-01</td></tr></tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Crachas: Depois do UPDATE</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_cracha</th><th>id_funcionario</th><th>data_emissao</th></tr></thead>
+                            <tbody><tr><td>2001</td><td>101</td><td>2024-01-01</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h3>4. Deletar Dados (DELETE)</h3>
+                <p>Por padrão, você não pode deletar um funcionário se ele ainda tiver um crachá associado (integridade referencial). Você precisa deletar o crachá primeiro.</p>
+                <pre><code class="sql">
+-- Deletar o crachá primeiro
+DELETE FROM Crachas WHERE id_cracha = 2001;
+
+-- Depois, deletar o funcionário
+DELETE FROM Funcionarios WHERE id_funcionario = 101;
+                </code></pre>
+                <p><strong>Explicação dos Comandos:</strong></p>
+                <ul>
+                    <li><code>DELETE FROM Crachas WHERE id_cracha = 2001</code>: Remove o registro do crachá.</li>
+                    <li><code>DELETE FROM Funcionarios WHERE id_funcionario = 101</code>: Só pode ser executado *depois* que o crachá associado foi removido, devido à restrição de chave estrangeira que impede a exclusão de um "pai" que ainda tem "filhos".</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Funcionarios: Antes do DELETE</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_funcionario</th><th>nome</th></tr></thead>
+                            <tbody><tr><td>101</td><td>Ana Paula Silva</td></tr></tbody>
+                        </table>
+                        <h4>Tabela Crachas: Antes do DELETE</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_cracha</th><th>id_funcionario</th><th>data_emissao</th></tr></thead>
+                            <tbody><tr><td>2001</td><td>101</td><td>2024-01-01</td></tr></tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Funcionarios: Depois do DELETE</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_funcionario</th><th>nome</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                        <h4>Tabela Crachas: Depois do DELETE</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_cracha</th><th>id_funcionario</th><th>data_emissao</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-header">
+                CRUD para Duas Tabelas com Cardinalidade 1:N
+                <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="faq-content">
+                <p>Em um relacionamento 1:N (um para muitos), um registro em uma tabela pode estar associado a múltiplos registros em outra tabela, mas um registro na segunda tabela está associado a apenas um na primeira. Exemplo: um cliente pode fazer muitos pedidos, mas um pedido pertence a apenas um cliente.</p>
+                <h3>Estrutura das Tabelas:</h3>
+                <pre><code class="sql">
+CREATE TABLE Clientes (
+    id_cliente INT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE
+);
+
+CREATE TABLE Pedidos (
+    id_pedido INT PRIMARY KEY,
+    id_cliente INT, -- Chave estrangeira para Clientes
+    data_pedido DATE,
+    valor_total DECIMAL(10, 2),
+    FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente)
+);
+                </code></pre>
+
+                <h3>1. Criar Dados (INSERT)</h3>
+                <p>Primeiro o cliente, depois seus pedidos.</p>
+                <pre><code class="sql">
+-- Inserir um cliente
+INSERT INTO Clientes (id_cliente, nome, email) VALUES (1, 'João Silva', 'joao@email.com');
+-- Inserir pedidos para João Silva
+INSERT INTO Pedidos (id_pedido, id_cliente, data_pedido, valor_total)
+VALUES (1001, 1, '2023-05-10', 250.00);
+INSERT INTO Pedidos (id_pedido, id_cliente, data_pedido, valor_total)
+VALUES (1002, 1, '2023-05-20', 120.50);
+                </code></pre>
+                <p><strong>Explicação dos Comandos:</strong></p>
+                <ul>
+                    <li>Similar ao 1:1, primeiro inserimos o "pai" (Cliente) e depois os "filhos" (Pedidos), referenciando o <code>id_cliente</code>.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Clientes: Antes do INSERT</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_cliente</th><th>nome</th><th>email</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                        <h4>Tabela Pedidos: Antes do INSERT</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_pedido</th><th>id_cliente</th><th>data_pedido</th><th>valor_total</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Clientes: Depois do INSERT</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_cliente</th><th>nome</th><th>email</th></tr></thead>
+                            <tbody><tr><td>1</td><td>João Silva</td><td>joao@email.com</td></tr></tbody>
+                        </table>
+                        <h4>Tabela Pedidos: Depois do INSERT</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_pedido</th><th>id_cliente</th><th>data_pedido</th><th>valor_total</th></tr></thead>
+                            <tbody>
+                                <tr><td>1001</td><td>1</td><td>2023-05-10</td><td>250.00</td></tr>
+                                <tr><td>1002</td><td>1</td><td>2023-05-20</td><td>120.50</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h3>2. Ler Dados (SELECT com JOIN)</h3>
+                <p>Para ver quais clientes fizeram quais pedidos.</p>
+                <pre><code class="sql">
+-- Listar clientes e seus pedidos
+SELECT
+    C.nome AS NomeCliente,
+    P.id_pedido,
+    P.data_pedido,
+    P.valor_total
+FROM
+    Clientes AS C
+JOIN
+    Pedidos AS P ON C.id_cliente = P.id_cliente;
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li><code>SELECT C.nome AS NomeCliente, ...</code>: Seleciona colunas de ambas as tabelas. <code>AS NomeCliente</code> cria um apelido para a coluna <code>nome</code> na saída.</li>
+                    <li><code>FROM Clientes AS C JOIN Pedidos AS P ON C.id_cliente = P.id_cliente</code>: Une as tabelas <code>Clientes</code> (apelido <code>C</code>) e <code>Pedidos</code> (apelido <code>P</code>) onde o <code>id_cliente</code> é o mesmo em ambas, combinando as informações.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Clientes (Estado Atual)</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_cliente</th><th>nome</th><th>email</th></tr></thead>
+                            <tbody><tr><td>1</td><td>João Silva</td><td>joao@email.com</td></tr></tbody>
+                        </table>
+                        <h4>Tabela Pedidos (Estado Atual)</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_pedido</th><th>id_cliente</th><th>data_pedido</th><th>valor_total</th></tr></thead>
+                            <tbody>
+                                <tr><td>1001</td><td>1</td><td>2023-05-10</td><td>250.00</td></tr>
+                                <tr><td>1002</td><td>1</td><td>2023-05-20</td><td>120.50</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Resultado do SELECT</h4>
+                        <table class="table-example">
+                            <thead><tr><th>NomeCliente</th><th>id_pedido</th><th>data_pedido</th><th>valor_total</th></tr></thead>
+                            <tbody>
+                                <tr><td>João Silva</td><td>1001</td><td>2023-05-10</td><td>250.00</td></tr>
+                                <tr><td>João Silva</td><td>1002</td><td>2023-05-20</td><td>120.50</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h3>3. Atualizar Dados (UPDATE)</h3>
+                <p>Atualizações são feitas nas tabelas individualmente.</p>
+                <h4>Exemplo 1: Atualizar o e-mail de um cliente</h4>
+                <pre><code class="sql">
+UPDATE Clientes SET email = 'joao.silva.novo@email.com' WHERE id_cliente = 1;
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li>Atualiza a coluna <code>email</code> para o cliente com <code>id_cliente = 1</code>.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Clientes: Antes do UPDATE</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_cliente</th><th>nome</th><th>email</th></tr></thead>
+                            <tbody><tr><td>1</td><td>João Silva</td><td>joao@email.com</td></tr></tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Clientes: Depois do UPDATE</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_cliente</th><th>nome</th><th>email</th></tr></thead>
+                            <tbody><tr><td>1</td><td>João Silva</td><td>joao.silva.novo@email.com</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h4>Exemplo 2: Atualizar o valor de um pedido</h4>
+                <pre><code class="sql">
+UPDATE Pedidos SET valor_total = 270.00 WHERE id_pedido = 1001;
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li>Atualiza a coluna <code>valor_total</code> para o pedido com <code>id_pedido = 1001</code>.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Pedidos: Antes do UPDATE</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_pedido</th><th>id_cliente</th><th>data_pedido</th><th>valor_total</th></tr></thead>
+                            <tbody>
+                                <tr><td>1001</td><td>1</td><td>2023-05-10</td><td>250.00</td></tr>
+                                <tr><td>1002</td><td>1</td><td>2023-05-20</td><td>120.50</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Pedidos: Depois do UPDATE</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_pedido</th><th>id_cliente</th><th>data_pedido</th><th>valor_total</th></tr></thead>
+                            <tbody>
+                                <tr><td>1001</td><td>1</td><td>2023-05-10</td><td>270.00</td></tr>
+                                <tr><td>1002</td><td>1</td><td>2023-05-20</td><td>120.50</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h3>4. Deletar Dados (DELETE)</h3>
+                <p>Aqui, o comportamento da chave estrangeira é crucial:</p>
+                <ul>
+                    <li><strong>Padrão (RESTRICT/NO ACTION):</strong> Se você tentar deletar um cliente que tem pedidos associados, o banco de dados geralmente **impedirá** a exclusão para manter a integridade. Você teria que deletar os pedidos primeiro.</li>
+                    <li><strong><code>ON DELETE CASCADE</code>:</strong> Ao criar a chave estrangeira, você pode especificar que, se um cliente for deletado, **todos os seus pedidos associados também serão deletados automaticamente**.</li>
+                    <li><strong><code>ON DELETE SET NULL</code>:</strong> Se especificado, ao deletar um cliente, o <code>id_cliente</code> nos pedidos associados será definido como <code>NULL</code>, mantendo os pedidos, mas desvinculando-os do cliente.</li>
+                </ul>
+                <h4>Exemplo com comportamento padrão (se não houver CASCADE/SET NULL):</h4>
+                <pre><code class="sql">
+-- Para deletar o cliente 1, primeiro você precisa deletar seus pedidos:
+DELETE FROM Pedidos WHERE id_cliente = 1;
+DELETE FROM Clientes WHERE id_cliente = 1;
+                </code></pre>
+                <p><strong>Explicação dos Comandos:</strong></p>
+                <ul>
+                    <li>A ordem é importante: primeiro os "filhos" (pedidos), depois o "pai" (cliente).</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Clientes: Antes do DELETE</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_cliente</th><th>nome</th><th>email</th></tr></thead>
+                            <tbody><tr><td>1</td><td>João Silva</td><td>joao.silva.novo@email.com</td></tr></tbody>
+                        </table>
+                        <h4>Tabela Pedidos: Antes do DELETE</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_pedido</th><th>id_cliente</th><th>data_pedido</th><th>valor_total</th></tr></thead>
+                            <tbody>
+                                <tr><td>1001</td><td>1</td><td>2023-05-10</td><td>270.00</td></tr>
+                                <tr><td>1002</td><td>1</td><td>2023-05-20</td><td>120.50</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Clientes: Depois do DELETE</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_cliente</th><th>nome</th><th>email</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                        <h4>Tabela Pedidos: Depois do DELETE</h4>
+                        <table class="table-example">
+                            <thead><tr><th>id_pedido</th><th>id_cliente</th><th>data_pedido</th><th>valor_total</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h4>Exemplo de como a tabela Pedidos seria criada com ON DELETE CASCADE:</h4>
+                <pre><code class="sql">
+CREATE TABLE Pedidos (
+    id_pedido INT PRIMARY KEY,
+    id_cliente INT,
+    data_pedido DATE,
+    valor_total DECIMAL(10, 2),
+    FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente) ON DELETE CASCADE
+);
+-- Com CASCADE, deletar o cliente 1 deletaria automaticamente seus pedidos.
+                </code></pre>
+                <p><strong>Explicação de <code>ON DELETE CASCADE</code>:</strong></p>
+                <ul>
+                    <li>Esta opção na definição da chave estrangeira significa que se uma linha na tabela "pai" (<code>Clientes</code>) for deletada, todas as linhas relacionadas na tabela "filho" (<code>Pedidos</code>) também serão automaticamente deletadas. É um efeito "cascata".</li>
+                </ul>
+
+                <h4>Exemplo de como a tabela Pedidos seria criada com ON DELETE SET NULL:</h4>
+                <pre><code class="sql">
+CREATE TABLE Pedidos (
+    id_pedido INT PRIMARY KEY,
+    id_cliente INT,
+    data_pedido DATE,
+    valor_total DECIMAL(10, 2),
+    FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente) ON DELETE SET NULL
+);
+-- Com SET NULL, deletar o cliente 1 definiria id_cliente como NULL nos pedidos associados.
+                </code></pre>
+                <p><strong>Explicação de <code>ON DELETE SET NULL</code>:</strong></p>
+                <ul>
+                    <li>Esta opção, também na definição da chave estrangeira, significa que se uma linha na tabela "pai" (<code>Clientes</code>) for deletada, o valor da chave estrangeira (<code>id_cliente</code>) nas linhas relacionadas da tabela "filho" (<code>Pedidos</code>) será definido como <code>NULL</code>. Os registros "filhos" não são deletados, mas perdem sua associação com o "pai" original.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-header">
+                CRUD para Duas Tabelas com Cardinalidade N:N
+                <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="faq-content">
+                <p>Em um relacionamento N:N (muitos para muitos), múltiplos registros em uma tabela podem estar associados a múltiplos registros em outra tabela. Exemplo: um autor pode escrever muitos livros, e um livro pode ter muitos autores. Para isso, precisamos de uma terceira tabela, chamada "tabela de junção" ou "tabela associativa", que conecta as duas principais.</p>
+                <h3>Estrutura das Tabelas:</h3>
+                <pre><code class="sql">
+CREATE TABLE Autores (
+    id_autor INT PRIMARY KEY,
+    nome_autor VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Livros (
+    id_livro INT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL
+);
+
+-- Tabela de Junção para N:N
+CREATE TABLE Autores_Livros (
+    id_autor INT,
+    id_livro INT,
+    PRIMARY KEY (id_autor, id_livro), -- Chave primária composta
+    FOREIGN KEY (id_autor) REFERENCES Autores(id_autor) ON DELETE CASCADE,
+    FOREIGN KEY (id_livro) REFERENCES Livros(id_livro) ON DELETE CASCADE
+);
+                </code></pre>
+                <p><strong>Explicação da Estrutura:</strong></p>
+                <ul>
+                    <li><code>Autores</code> e <code>Livros</code> são as tabelas principais.</li>
+                    <li><code>Autores_Livros</code>: Esta é a tabela de junção. Ela contém apenas as chaves primárias das duas tabelas que ela conecta. A combinação de <code>id_autor</code> e <code>id_livro</code> forma sua chave primária composta, garantindo que cada par autor-livro seja único. As chaves estrangeiras com <code>ON DELETE CASCADE</code> garantem que, se um autor ou livro for deletado, suas associações na tabela de junção também sejam removidas.</li>
+                </ul>
+
+                <h3>1. Criar Dados (INSERT)</h3>
+                <p>Primeiro os autores e livros, depois as associações na tabela de junção.</p>
+                <pre><code class="sql">
+-- Inserir Autores
+INSERT INTO Autores (id_autor, nome_autor) VALUES (1, 'Machado de Assis');
+INSERT INTO Autores (id_autor, nome_autor) VALUES (2, 'Clarice Lispector');
+
+-- Inserir Livros
+INSERT INTO Livros (id_livro, titulo) VALUES (101, 'Dom Casmurro');
+INSERT INTO Livros (id_livro, titulo) VALUES (102, 'A Hora da Estrela');
+INSERT INTO Livros (id_livro, titulo) VALUES (103, 'Memórias Póstumas de Brás Cubas');
+
+-- Inserir Associações na tabela de junção Autores_Livros
+-- Machado de Assis escreveu Dom Casmurro e Memórias Póstumas
+INSERT INTO Autores_Livros (id_autor, id_livro) VALUES (1, 101);
+INSERT INTO Autores_Livros (id_autor, id_livro) VALUES (1, 103);
+-- Clarice Lispector escreveu A Hora da Estrela
+INSERT INTO Autores_Livros (id_autor, id_livro) VALUES (2, 102);
+                </code></pre>
+                <p><strong>Explicação dos Comandos:</strong></p>
+                <ul>
+                    <li>Inserimos os registros nas tabelas <code>Autores</code> e <code>Livros</code> separadamente.</li>
+                    <li>Em seguida, usamos <code>INSERT</code> na tabela <code>Autores_Livros</code> para criar as ligações. Por exemplo, <code>(1, 101)</code> significa que o Autor com ID 1 (Machado de Assis) está associado ao Livro com ID 101 (Dom Casmurro).</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Autores: Antes do INSERT</h4>
+                        <table class="table-example"><thead><tr><th>id_autor</th><th>nome_autor</th></tr></thead><tbody></tbody></table>
+                        <h4>Tabela Livros: Antes do INSERT</h4>
+                        <table class="table-example"><thead><tr><th>id_livro</th><th>titulo</th></tr></thead><tbody></tbody></table>
+                        <h4>Tabela Autores_Livros: Antes do INSERT</h4>
+                        <table class="table-example"><thead><tr><th>id_autor</th><th>id_livro</th></tr></thead><tbody></tbody></table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Autores: Depois do INSERT</h4>
+                        <table class="table-example"><thead><tr><th>id_autor</th><th>nome_autor</th></tr></thead><tbody><tr><td>1</td><td>Machado de Assis</td></tr><tr><td>2</td><td>Clarice Lispector</td></tr></tbody></table>
+                        <h4>Tabela Livros: Depois do INSERT</h4>
+                        <table class="table-example"><thead><tr><th>id_livro</th><th>titulo</th></tr></thead><tbody><tr><td>101</td><td>Dom Casmurro</td></tr><tr><td>102</td><td>A Hora da Estrela</td></tr><tr><td>103</td><td>Memórias Póstumas de Brás Cubas</td></tr></tbody></table>
+                        <h4>Tabela Autores_Livros: Depois do INSERT</h4>
+                        <table class="table-example"><thead><tr><th>id_autor</th><th>id_livro</th></tr></thead><tbody><tr><td>1</td><td>101</td></tr><tr><td>1</td><td>103</td></tr><tr><td>2</td><td>102</td></tr></tbody></table>
+                    </div>
+                </div>
+
+                <h3>2. Ler Dados (SELECT com JOIN de Três Tabelas)</h3>
+                <p>Para ver autores e seus livros, ou livros e seus autores, precisamos unir as três tabelas.</p>
+                <pre><code class="sql">
+-- Listar todos os livros e seus autores
+SELECT
+    L.titulo,
+    A.nome_autor
+FROM
+    Livros AS L
+JOIN
+    Autores_Livros AS AL ON L.id_livro = AL.id_livro
+JOIN
+    Autores AS A ON AL.id_autor = A.id_autor;
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li><code>SELECT L.titulo, A.nome_autor</code>: Seleciona o título do livro (da tabela <code>Livros</code>) e o nome do autor (da tabela <code>Autores</code>).</li>
+                    <li><code>FROM Livros AS L</code>: Começa a consulta pela tabela <code>Livros</code>.</li>
+                    <li><code>JOIN Autores_Livros AS AL ON L.id_livro = AL.id_livro</code>: Une <code>Livros</code> com a tabela de junção <code>Autores_Livros</code> usando o <code>id_livro</code>.</li>
+                    <li><code>JOIN Autores AS A ON AL.id_autor = A.id_autor</code>: Em seguida, une o resultado com a tabela <code>Autores</code> usando o <code>id_autor</code> da tabela de junção. Isso "costura" as três tabelas para mostrar a relação completa.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Autores (Estado Atual)</h4>
+                        <table class="table-example"><thead><tr><th>id_autor</th><th>nome_autor</th></tr></thead><tbody><tr><td>1</td><td>Machado de Assis</td></tr><tr><td>2</td><td>Clarice Lispector</td></tr></tbody></table>
+                        <h4>Tabela Livros (Estado Atual)</h4>
+                        <table class="table-example"><thead><tr><th>id_livro</th><th>titulo</th></tr></thead><tbody><tr><td>101</td><td>Dom Casmurro</td></tr><tr><td>102</td><td>A Hora da Estrela</td></tr><tr><td>103</td><td>Memórias Póstumas de Brás Cubas</td></tr></tbody></table>
+                        <h4>Tabela Autores_Livros (Estado Atual)</h4>
+                        <table class="table-example"><thead><tr><th>id_autor</th><th>id_livro</th></tr></thead><tbody><tr><td>1</td><td>101</td></tr><tr><td>1</td><td>103</td></tr><tr><td>2</td><td>102</td></tr></tbody></table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Resultado do SELECT</h4>
+                        <table class="table-example">
+                            <thead><tr><th>titulo</th><th>nome_autor</th></tr></thead>
+                            <tbody>
+                                <tr><td>Dom Casmurro</td><td>Machado de Assis</td></tr>
+                                <tr><td>Memórias Póstumas de Brás Cubas</td><td>Machado de Assis</td></tr>
+                                <tr><td>A Hora da Estrela</td><td>Clarice Lispector</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h3>3. Atualizar Dados (UPDATE)</h3>
+                <p>Atualizações são feitas nas tabelas principais. A tabela de junção raramente é atualizada diretamente, mas sim, os registros são deletados e inseridos novamente para alterar associações.</p>
+                <h4>Exemplo 1: Atualizar o nome de um autor</h4>
+                <pre><code class="sql">
+UPDATE Autores SET nome_autor = 'Machado de Assis Júnior' WHERE id_autor = 1;
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li>Atualiza o nome do autor na tabela <code>Autores</code>. Isso não afeta a tabela de junção, pois os IDs permanecem os mesmos.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Autores: Antes do UPDATE</h4>
+                        <table class="table-example"><thead><tr><th>id_autor</th><th>nome_autor</th></tr></thead><tbody><tr><td>1</td><td>Machado de Assis</td></tr><tr><td>2</td><td>Clarice Lispector</td></tr></tbody></table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Autores: Depois do UPDATE</h4>
+                        <table class="table-example"><thead><tr><th>id_autor</th><th>nome_autor</th></tr></thead><tbody><tr><td>1</td><td>Machado de Assis Júnior</td></tr><tr><td>2</td><td>Clarice Lispector</td></tr></tbody></table>
+                    </div>
+                </div>
+
+                <h4>Exemplo 2: Atualizar o título de um livro</h4>
+                <pre><code class="sql">
+UPDATE Livros SET titulo = 'A Estrela Cadente' WHERE id_livro = 102;
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li>Atualiza o título do livro na tabela <code>Livros</code>. Similarmente, não afeta a tabela de junção.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Livros: Antes do UPDATE</h4>
+                        <table class="table-example"><thead><tr><th>id_livro</th><th>titulo</th></tr></thead><tbody><tr><td>101</td><td>Dom Casmurro</td></tr><tr><td>102</td><td>A Hora da Estrela</td></tr><tr><td>103</td><td>Memórias Póstumas de Brás Cubas</td></tr></tbody></table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Livros: Depois do UPDATE</h4>
+                        <table class="table-example"><thead><tr><th>id_livro</th><th>titulo</th></tr></thead><tbody><tr><td>101</td><td>Dom Casmurro</td></tr><tr><td>102</td><td>A Estrela Cadente</td></tr><tr><td>103</td><td>Memórias Póstumas de Brás Cubas</td></tr></tbody></table>
+                    </div>
+                </div>
+
+                <h3>4. Deletar Dados (DELETE)</h3>
+                <p>Você pode deletar associações na tabela de junção, ou deletar autores/livros. Com <code>ON DELETE CASCADE</code> nas chaves estrangeiras da tabela de junção, deletar um autor ou livro principal removerá automaticamente suas associações.</p>
+                <h4>Exemplo 1: Deletar uma associação específica (ex: Machado de Assis não escreveu mais Dom Casmurro)</h4>
+                <pre><code class="sql">
+DELETE FROM Autores_Livros WHERE id_autor = 1 AND id_livro = 101;
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li>Remove uma linha específica da tabela de junção, desvinculando um autor de um livro sem deletar o autor ou o livro em si.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Autores_Livros: Antes do DELETE</h4>
+                        <table class="table-example"><thead><tr><th>id_autor</th><th>id_livro</th></tr></thead><tbody><tr><td>1</td><td>101</td></tr><tr><td>1</td><td>103</td></tr><tr><td>2</td><td>102</td></tr></tbody></table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Autores_Livros: Depois do DELETE</h4>
+                        <table class="table-example"><thead><tr><th>id_autor</th><th>id_livro</th></tr></thead><tbody><tr><td>1</td><td>103</td></tr><tr><td>2</td><td>102</td></tr></tbody></table>
+                    </div>
+                </div>
+
+                <h4>Exemplo 2: Deletar um livro (e suas associações serão removidas por CASCADE)</h4>
+                <pre><code class="sql">
+DELETE FROM Livros WHERE id_livro = 102; -- A Hora da Estrela
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li>Ao deletar o livro com <code>id_livro = 102</code> da tabela <code>Livros</code>, a cláusula <code>ON DELETE CASCADE</code> na chave estrangeira da tabela <code>Autores_Livros</code> garante que todas as associações (linhas) em <code>Autores_Livros</code> que se referem a este livro também serão automaticamente removidas.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Livros: Antes do DELETE</h4>
+                        <table class="table-example"><thead><tr><th>id_livro</th><th>titulo</th></tr></thead><tbody><tr><td>101</td><td>Dom Casmurro</td></tr><tr><td>102</td><td>A Estrela Cadente</td></tr><tr><td>103</td><td>Memórias Póstumas de Brás Cubas</td></tr></tbody></table>
+                        <h4>Tabela Autores_Livros: Antes do DELETE</h4>
+                        <table class="table-example"><thead><tr><th>id_autor</th><th>id_livro</th></tr></thead><tbody><tr><td>1</td><td>103</td></tr><tr><td>2</td><td>102</td></tr></tbody></table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Livros: Depois do DELETE</h4>
+                        <table class="table-example"><thead><tr><th>id_livro</th><th>titulo</th></tr></thead><tbody><tr><td>101</td><td>Dom Casmurro</td></tr><tr><td>103</td><td>Memórias Póstumas de Brás Cubas</td></tr></tbody></table>
+                        <h4>Tabela Autores_Livros: Depois do DELETE</h4>
+                        <table class="table-example"><thead><tr><th>id_autor</th><th>id_livro</th></tr></thead><tbody><tr><td>1</td><td>103</td></tr></tbody></table>
+                    </div>
+                </div>
+
+                <h4>Exemplo 3: Deletar um autor (e suas associações serão removidas por CASCADE)</h4>
+                <pre><code class="sql">
+DELETE FROM Autores WHERE id_autor = 2; -- Clarice Lispector
+                </code></pre>
+                <p><strong>Explicação do Comando:</strong></p>
+                <ul>
+                    <li>Similar ao exemplo anterior, ao deletar o autor com <code>id_autor = 2</code> da tabela <code>Autores</code>, a cláusula <code>ON DELETE CASCADE</code> na chave estrangeira da tabela <code>Autores_Livros</code> garante que todas as associações (linhas) em <code>Autores_Livros</code> que se referem a este autor também serão automaticamente removidas.</li>
+                </ul>
+                <div class="table-container">
+                    <div class="table-box">
+                        <h4>Tabela Autores: Antes do DELETE</h4>
+                        <table class="table-example"><thead><tr><th>id_autor</th><th>nome_autor</th></tr></thead><tbody><tr><td>1</td><td>Machado de Assis Júnior</td></tr><tr><td>2</td><td>Clarice Lispector</td></tr></tbody></table>
+                        <h4>Tabela Autores_Livros: Antes do DELETE</h4>
+                        <table class="table-example"><thead><tr><th>id_autor</th><th>id_livro</th></tr></thead><tbody><tr><td>1</td><td>103</td></tr></tbody></table>
+                    </div>
+                    <div class="table-box">
+                        <h4>Tabela Autores: Depois do DELETE</h4>
+                        <table class="table-example"><thead><tr><th>id_autor</th><th>nome_autor</th></tr></thead><tbody><tr><td>1</td><td>Machado de Assis Júnior</td></tr></tbody></table>
+                        <h4>Tabela Autores_Livros: Depois do DELETE</h4>
+                        <table class="table-example"><thead><tr><th>id_autor</th><th>id_livro</th></tr></thead><tbody><tr><td>1</td><td>103</td></tr></tbody></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const faqHeaders = document.querySelectorAll('.faq-header');
+
+            faqHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const currentContent = header.nextElementSibling;
+                    const isActive = header.classList.contains('active');
+
+                    // Fecha todos os outros itens do acordeão
+                    faqHeaders.forEach(otherHeader => {
+                        if (otherHeader !== header && otherHeader.classList.contains('active')) {
+                            otherHeader.classList.remove('active');
+                            otherHeader.nextElementSibling.classList.remove('open');
+                            otherHeader.nextElementSibling.style.maxHeight = '0';
+                            otherHeader.nextElementSibling.style.padding = '0 25px'; // Reset padding
+                        }
+                    });
+
+                    // Abre ou fecha o item clicado
+                    if (isActive) {
+                        header.classList.remove('active');
+                        currentContent.classList.remove('open');
+                        currentContent.style.maxHeight = '0';
+                        currentContent.style.padding = '0 25px'; // Reset padding
+                    } else {
+                        header.classList.add('active');
+                        currentContent.classList.add('open');
+                        currentContent.style.maxHeight = currentContent.scrollHeight + 'px';
+                        currentContent.style.padding = '20px 25px'; // Set padding
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
