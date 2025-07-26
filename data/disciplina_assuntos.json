@@ -1,0 +1,42 @@
+[
+    {
+        "id": "log_prog",
+        "nome": "Lógica de Programação",
+        "assuntos": [
+            "Fundamentos de Programação",
+            "Variáveis e Tipos de Dados",
+            "Operadores",
+            "Estruturas Condicionais (if/else, switch)",
+            "FOR",
+            "WHILE",
+            "DO-WHILE",
+            "Arrays (Vetores e Matrizes)",
+            "Funções",
+            "Boas Práticas de Código"
+        ]
+    },
+    {
+        "id": "bd_dados",
+        "nome": "Banco de Dados",
+        "assuntos": [
+            "Introdução a Bancos de Dados",
+            "Modelagem de Dados (ER)",
+            "SQL Básico (SELECT, INSERT, UPDATE, DELETE)",
+            "Joins e Subconsultas",
+            "Normalização de Dados",
+            "Transações e Concorrência"
+        ]
+    },
+    {
+        "id": "web_dev",
+        "nome": "Desenvolvimento Web",
+        "assuntos": [
+            "Introdução ao HTML5",
+            "CSS3 Essencial",
+            "JavaScript Fundamentos",
+            "Requisições Assíncronas (AJAX/Fetch)",
+            "Frameworks Frontend (Conceitos)",
+            "PHP para Web"
+        ]
+    }
+]

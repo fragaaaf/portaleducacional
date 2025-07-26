@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionário Extenso: PHP, HTML e Formulários (Versão para Impressão)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- highlight.js CSS para coloração de código (tema Atom One Dark, similar ao VSCode) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <style>
+        /* Estilos baseados nos FAQs anteriores e adaptados */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f8ff; /* Azul clarinho divertido */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .quiz-container {
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 900px;
+            overflow: hidden;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .quiz-section {
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 20px; /* Espaçamento entre seções */
+            margin-bottom: 20px; /* Espaçamento entre seções */
+        }
+        .quiz-section:last-child {
+            border-bottom: none;
+        }
+        .quiz-header {
+            background-color: #6a0dad; /* Roxo vibrante */
+            color: white;
+            padding: 18px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.15rem;
+            border-radius: 20px 20px 0 0; /* Apenas no topo do container principal */
+        }
+        /* Ajuste para cabeçalhos de subseção dentro do quiz-container */
+        .quiz-container h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #4b0082;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-left: 25px; /* Alinha com o conteúdo */
+        }
+        .quiz-container h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #6a0dad;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            padding-left: 25px; /* Alinha com o conteúdo */
+        }
+        .quiz-container p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: #333;
+            padding: 0 25px; /* Padding para parágrafos */
+        }
+        .quiz-container ol {
+            list-style: decimal;
+            margin-left: 45px; /* Ajusta para a numeração */
+            margin-bottom: 15px;
+            color: #555;
+            padding-right: 25px; /* Garante que não ultrapasse a margem */
+        }
+        .quiz-container ol li {
+            margin-bottom: 10px;
+        }
+        .quiz-container ol li strong {
+            color: #333;
+        }
+        .quiz-container ul {
+            list-style: disc;
+            margin-left: 45px;
+            margin-bottom: 15px;
+            color: #555;
+            padding-right: 25px;
+        }
+        .quiz-container ul li {
+            margin-bottom: 8px;
+        }
+
+        /* Estilo para blocos de código */
+        pre {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto; /* Mantém a rolagem horizontal para telas */
+            font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+            font-size: 0.95rem;
+            margin: 15px 25px; /* Margem para blocos de código */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            word-wrap: break-word; /* Quebra de linha para código */
+            white-space: pre-wrap; /* Preserva espaços mas quebra linha */
+        }
+        code {
+            font-family: inherit;
+        }
+
+        /* Estilos para o título principal */
+        .main-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            text-align: center;
+            color: #6a0dad;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: #ede9fe;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+        }
+
+        /* Estilos para o Sumário */
+        .table-of-contents {
+            background-color: #e6e6fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 25px 30px 25px; /* Margem para o sumário */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        .table-of-contents h2 {
+            color: #4b0082;
+            font-size: 1.6rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+            padding-left: 0; /* Remove padding extra */
+        }
+        .table-of-contents ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .table-of-contents li {
+            margin-bottom: 10px;
+        }
+        .table-of-contents a {
+            color: #6a0dad;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            display: block;
+            padding: 5px 0;
+        }
+        .table-of-contents a:hover {
+            color: #8a2be2;
+            text-decoration: underline;
+        }
+
+        /* Estilos para as alternativas */
+        .question-alternatives {
+            list-style: none;
+            padding: 0 25px 0 45px; /* Ajusta padding para alternativas */
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        .question-alternatives li {
+            margin-bottom: 8px;
+            color: #444;
+        }
+        .question-alternatives li span {
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        /* Estilos para o gabarito */
+        .gabarito {
+            background-color: #e6ffe6; /* Verde clarinho */
+            border: 1px solid #aaffaa;
+            border-radius: 10px;
+            padding: 20px 25px;
+            margin: 30px 25px; /* Margem para o gabarito */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        .gabarito h3 {
+            color: #28a745; /* Verde mais escuro */
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        .gabarito ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* 3 colunas responsivas */
+            gap: 10px;
+        }
+        .gabarito li {
+            font-weight: 500;
+            color: #333;
+        }
+
+
+        /* Responsividade básica */
+        @media (max-width: 768px) {
+            .quiz-header {
+                font-size: 1rem;
+                padding: 15px 20px;
+            }
+            .main-title {
+                font-size: 1.75rem;
+                padding: 1rem;
+            }
+            .table-of-contents, .gabarito {
+                margin: 20px;
+                padding: 15px;
+            }
+            .quiz-container h2, .quiz-container h3, .quiz-container p, 
+            .quiz-container ol, .quiz-container ul, .question-alternatives {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            pre {
+                margin: 15px;
+            }
+            .gabarito ul {
+                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            }
+        }
+
+        /* Estilos específicos para impressão */
+        @media print {
+            body {
+                background-color: #fff;
+                padding: 0;
+                margin: 0;
+                font-size: 12pt; /* Fonte 12pt para impressão */
+            }
+            .quiz-container {
+                box-shadow: none;
+                border-radius: 0;
+                margin: 0;
+                max-width: none;
+                width: 100%;
+            }
+            .quiz-header {
+                border-radius: 0;
+                page-break-after: avoid;
+                background-color: #6a0dad !important;
+                -webkit-print-color-adjust: exact;
+                color: white !important;
+            }
+            .main-title {
+                color: #000 !important;
+                background-color: #f0f0f0 !important;
+                -webkit-print-color-adjust: exact;
+            }
+            pre {
+                background-color: #eee !important;
+                color: #333 !important;
+                border: 1px solid #ccc !important;
+                word-wrap: break-word; /* Quebra de linha para código */
+                white-space: pre-wrap; /* Preserva espaços mas quebra linha */
+                overflow: visible; /* Garante que não haja rolagem horizontal na impressão */
+            }
+            .gabarito {
+                background-color: #e6ffe6 !important;
+                border: 1px solid #aaffaa !important;
+                -webkit-print-color-adjust: exact;
+            }
+
+            /* Numeração de páginas */
+            @page {
+                margin: 1in;
+                @bottom-right {
+                    content: "Página " counter(page) " de " counter(pages);
+                    font-size: 10pt;
+                    color: #555;
+                }
+            }
+            body {
+                counter-reset: page;
+            }
+            .quiz-section {
+                page-break-before: auto; /* Permite quebrar antes, mas tenta evitar */
+                page-break-inside: avoid; /* Tenta manter a seção inteira na mesma página */
+            }
+            .question-item {
+                page-break-inside: avoid; /* Tenta manter a questão e alternativas na mesma página */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1 class="main-title">
+            📝 Questionário Extenso: PHP, HTML e Formulários para Iniciantes
+        </h1>
+
+        <nav class="table-of-contents">
+            <h2>Sumário</h2>
+            <ul>
+                <li><a href="#php-arrays">1. PHP: Arrays</a>
+                    <ul>
+                        <li><a href="#arrays-conceito">1.1. Conceito, Estrutura e Declaração</a></li>
+                        <li><a href="#arrays-crud">1.2. CRUD em Arrays</a></li>
+                        <li><a href="#arrays-ordenacao">1.3. Ordenação (Funções Prontas)</a></li>
+                        <li><a href="#arrays-foreach-printr">1.4. FOREACH e PRINT_R com Arrays</a></li>
+                        <li><a href="#arrays-exemplos">1.5. Exemplos</a></li>
+                        <li><a href="#arrays-exercicios">1.6. Exercícios Prático e Teórico</a></li>
+                    </ul>
+                </li>
+                <li><a href="#html-geral">2. HTML: Geral</a>
+                    <ul>
+                        <li><a href="#html-tags">2.1. As 20 Tags Mais Usadas no HTML</a></li>
+                        <li><a href="#html-estrutura">2.2. Ordem da Estrutura da Página HTML</a></li>
+                        <li><a href="#html-explicacao-tags">2.3. Explicação sobre Cada uma das 20 Tags</a></li>
+                    </ul>
+                </li>
+                <li><a href="#html-forms">3. HTML: Formulário</a>
+                    <ul>
+                        <li><a href="#forms-componentes">3.1. Os 20 Itens que Compõem o Formulário</a></li>
+                        <li><a href="#forms-estrutura">3.2. Ordem da Estrutura de Cada Item</a></li>
+                        <li><a href="#forms-explicacao-componentes">3.3. Explicação sobre Cada um dos 20 Componentes</a></li>
+                        <li><a href="#forms-exemplos">3.4. Exemplos</a></li>
+                        <li><a href="#forms-exercicios">3.5. Exercícios Prático e Teórico</a></li>
+                    </ul>
+                </li>
+                <li><a href="#php-forms-db">4. PHP: Manipulação de Formulários e Banco de Dados</a>
+                    <ul>
+                        <li><a href="#php-destino-formulario">4.1. Destino do Formulário é a Página de Recepção dos Dados</a></li>
+                        <li><a href="#php-post-array">4.2. Variável $_POST é um ARRAY</a></li>
+                        <li><a href="#php-atribuicao-variaveis">4.3. Atribuição às Variáveis dos Valores Vindos do Formulário</a></li>
+                        <li><a href="#php-tratamento-manipulacao">4.4. Tratamento e Manipulação das Variáveis Criadas</a></li>
+                        <li><a href="#php-acesso-banco">4.5. Acesso Autorizado ao Banco</a></li>
+                        <li><a href="#php-crud-sql">4.6. CRUD Através do PHP (Comandos SQL)</a></li>
+                        <li><a href="#php-exibicao-resultados">4.7. Exibição dos Resultados</a></li>
+                        <li><a href="#php-exemplos">4.8. Exemplos</a></li>
+                        <li><a href="#php-exercicios">4.9. Exercícios Prático e Teórico</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="quiz-section" id="php-arrays">
+            <h2>1. PHP: Arrays</h2>
+
+            <h3 id="arrays-conceito">1.1. Conceito, Estrutura e Declaração</h3>
+            <div class="question-item">
+                <p><strong>Questão 1</strong><br>Você está desenvolvendo um sistema de gerenciamento de estoque e precisa armazenar uma lista de produtos, onde cada produto tem um nome e um preço. Qual a melhor forma de declarar um array em PHP para representar essa estrutura, permitindo fácil acesso ao nome e preço de cada produto?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `$produtos = ["Teclado", 150.00, "Mouse", 80.00];`</li>
+                    <li><span>B)</span> `$produtos = [["nome" => "Teclado", "preco" => 150.00], ["nome" => "Mouse", "preco" => 80.00]];`</li>
+                    <li><span>C)</span> `$produtos = "Teclado,150.00;Mouse,80.00";`</li>
+                    <li><span>D)</span> `$produtos = new Array("Teclado", "Mouse");`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 2</strong><br>Em um projeto PHP, você precisa armazenar os dias da semana em ordem. Qual tipo de array PHP seria o mais natural e eficiente para essa finalidade, considerando que você acessaria os dias por sua posição numérica (ex: 0 para Domingo, 1 para Segunda)?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Array Associativo</li>
+                    <li><span>B)</span> Array Multidimensional</li>
+                    <li><span>C)</span> Array Indexado</li>
+                    <li><span>D)</span> Objeto (stdClass)</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 3</strong><br>Qual das seguintes declarações de array em PHP utiliza a sintaxe curta e é considerada a forma mais moderna e comum de criar um array?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `array("elemento1", "elemento2")`</li>
+                    <li><span>B)</span> `new Array("elemento1", "elemento2")`</li>
+                    <li><span>C)</span> `["elemento1", "elemento2"]`</li>
+                    <li><span>D)</span> `list("elemento1", "elemento2")`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 4</strong><br>Você está construindo um perfil de usuário e precisa armazenar informações como "nome", "idade" e "email" para um único usuário. Qual tipo de array seria o mais adequado para associar esses dados a chaves descritivas?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Array Indexado</li>
+                    <li><span>B)</span> Array Associativo</li>
+                    <li><span>C)</span> Array Multidimensional</li>
+                    <li><span>D)</span> Array Numérico</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 5</strong><br>Considere o array `$dados = ["chave1" => "valorA", "chave2" => "valorB"];`. Como você acessaria o "valorA" neste array?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `$dados[0]`</li>
+                    <li><span>B)</span> `$dados["valorA"]`</li>
+                    <li><span>C)</span> `$dados["chave1"]`</li>
+                    <li><span>D)</span> `$dados->chave1`</li>
+                </ul>
+            </div>
+
+            <h3 id="arrays-crud">1.2. CRUD em Arrays</h3>
+            <div class="question-item">
+                <p><strong>Questão 6</strong><br>Para adicionar um novo elemento "Uva" ao final de um array indexado `$frutas = ["Maçã", "Banana"];`, qual é a sintaxe correta e mais comum em PHP?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `array_push($frutas, "Uva");`</li>
+                    <li><span>B)</span> `$frutas[count($frutas)] = "Uva";`</li>
+                    <li><span>C)</span> `$frutas[] = "Uva";`</li>
+                    <li><span>D)</span> `array_add($frutas, "Uva");`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 7</strong><br>Você tem um array associativo `$config = ["tema" => "claro", "idioma" => "pt-br"];`. Se você precisar alterar o tema para "escuro", qual comando PHP você usaria?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `update($config["tema"], "escuro");`</li>
+                    <li><span>B)</span> `$config["tema"] = "escuro";`</li>
+                    <li><span>C)</span> `array_set($config, "tema", "escuro");`</li>
+                    <li><span>D)</span> `config.tema = "escuro";`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 8</strong><br>Para remover o elemento "Banana" de um array indexado `$frutas = ["Maçã", "Banana", "Laranja"];`, qual função PHP é a mais utilizada?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `remove($frutas, 1);`</li>
+                    <li><span>B)</span> `delete($frutas[1]);`</li>
+                    <li><span>C)</span> `unset($frutas[1]);`</li>
+                    <li><span>D)</span> `array_pop($frutas);`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 9</strong><br>Considere o array multidimensional `$usuarios = [["id" => 1, "nome" => "Alice"], ["id" => 2, "nome" => "Bob"]];`. Para acessar o nome "Bob", qual é a sintaxe correta?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `$usuarios[1][0]`</li>
+                    <li><span>B)</span> `$usuarios[1]["nome"]`</li>
+                    <li><span>C)</span> `$usuarios["Bob"]`</li>
+                    <li><span>D)</span> `$usuarios[nome][1]`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 10</strong><br>Você precisa adicionar uma nova propriedade "status" com o valor "ativo" a um array associativo existente `$usuario = ["nome" => "João", "idade" => 25];`. Qual comando PHP realizaria essa adição?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `add_property($usuario, "status", "ativo");`</li>
+                    <li><span>B)</span> `$usuario->status = "ativo";`</li>
+                    <li><span>C)</span> `$usuario["status"] = "ativo";`</li>
+                    <li><span>D)</span> `array_insert($usuario, "status", "ativo");`</li>
+                </ul>
+            </div>
+
+            <h3 id="arrays-ordenacao">1.3. Ordenação (Funções Prontas)</h3>
+            <div class="question-item">
+                <p><strong>Questão 11</strong><br>Você tem um array de números `$valores = [5, 1, 8, 3];` e precisa ordená-lo em ordem crescente. Qual função PHP você utilizaria?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `rsort($valores);`</li>
+                    <li><span>B)</span> `asort($valores);`</li>
+                    <li><span>C)</span> `sort($valores);`</li>
+                    <li><span>D)</span> `ksort($valores);`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 12</strong><br>Para ordenar um array associativo `$cidades = ["SP" => "São Paulo", "RJ" => "Rio de Janeiro", "MG" => "Belo Horizonte"];` em ordem alfabética pelos *nomes das cidades* (valores), mantendo a associação entre a sigla e o nome, qual função PHP é a mais adequada?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `ksort($cidades);`</li>
+                    <li><span>B)</span> `sort($cidades);`</li>
+                    <li><span>C)</span> `asort($cidades);`</li>
+                    <li><span>D)</span> `arsort($cidades);`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 13</strong><br>Se você precisa ordenar um array associativo `$precos = ["arroz" => 10.50, "feijao" => 8.00, "macarrao" => 5.20];` em ordem decrescente pelos *preços* (valores), mantendo a associação chave/valor, qual função PHP você usaria?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `sort($precos);`</li>
+                    <li><span>B)</span> `rsort($precos);`</li>
+                    <li><span>C)</span> `arsort($precos);`</li>
+                    <li><span>D)</span> `krsort($precos);`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 14</strong><br>Qual função PHP é utilizada para ordenar um array associativo em ordem crescente com base em suas *chaves*?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `asort()`</li>
+                    <li><span>B)</span> `sort()`</li>
+                    <li><span>C)</span> `ksort()`</li>
+                    <li><span>D)</span> `usort()`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 15</strong><br>Você tem um array `$letras = ['c', 'a', 'b'];` e quer ordená-lo em ordem alfabética decrescente. Qual função PHP faria isso?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `sort($letras);`</li>
+                    <li><span>B)</span> `rsort($letras);`</li>
+                    <li><span>C)</span> `asort($letras);`</li>
+                    <li><span>D)</span> `krsort($letras);`</li>
+                </ul>
+            </div>
+
+            <h3 id="arrays-foreach-printr">1.4. FOREACH e PRINT_R com Arrays</h3>
+            <div class="question-item">
+                <p><strong>Questão 16</strong><br>Para iterar sobre um array `$itens = ["caneta", "caderno", "borracha"];` e exibir cada item em uma lista HTML, qual estrutura de loop PHP é a mais recomendada?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `for ($i = 0; $i < count($itens); $i++)`</li>
+                    <li><span>B)</span> `while ($item = current($itens))`</li>
+                    <li><span>C)</span> `foreach ($itens as $item)`</li>
+                    <li><span>D)</span> `do { ... } while (true)`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 17</strong><br>Você está depurando um script PHP e precisa visualizar a estrutura completa e os valores de um array complexo `$dadosUsuario`. Qual função PHP é ideal para imprimir essa informação de forma legível para o desenvolvedor?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `echo $dadosUsuario;`</li>
+                    <li><span>B)</span> `var_dump($dadosUsuario);`</li>
+                    <li><span>C)</span> `print_r($dadosUsuario);`</li>
+                    <li><span>D)</span> `json_encode($dadosUsuario);`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 18</strong><br>Ao usar `foreach` para percorrer um array associativo `$produto = ["nome" => "Celular", "preco" => 1200];`, como você acessaria tanto a chave ("nome") quanto o valor ("Celular") em cada iteração?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `foreach ($produto as $key => $value)`</li>
+                    <li><span>B)</span> `foreach ($produto as $value)`</li>
+                    <li><span>C)</span> `foreach ($produto as $key)`</li>
+                    <li><span>D)</span> `foreach ($produto as $index, $item)`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 19</strong><br>Qual é a principal vantagem de usar `foreach` em vez de um loop `for` tradicional para iterar sobre arrays em PHP, especialmente arrays associativos?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `foreach` é sempre mais rápido.</li>
+                    <li><span>B)</span> `foreach` permite modificar os elementos do array diretamente sem usar referência.</li>
+                    <li><span>C)</span> `foreach` simplifica a iteração, abstraindo o acesso por índice ou chave.</li>
+                    <li><span>D)</span> `foreach` é a única forma de iterar sobre arrays multidimensionais.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 20</strong><br>Você tem um array `$cores = ["red", "green", "blue"];` e quer imprimir cada cor em uma nova linha. Qual trecho de código PHP faria isso corretamente?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `echo implode("\n", $cores);`</li>
+                    <li><span>B)</span> `for ($i = 0; $i < count($cores); $i++) { echo $cores[$i] . "\n"; }`</li>
+                    <li><span>C)</span> `foreach ($cores as $cor) { echo $cor . "\n"; }`</li>
+                    <li><span>D)</span> Todas as alternativas A, B e C estão corretas.</li>
+                </ul>
+            </div>
+
+            <h3 id="arrays-exemplos">1.5. Exemplos</h3>
+            <div class="question-item">
+                <p><strong>Questão 21</strong><br>No exemplo de manipulação de array dado, para atualizar o preço de um produto específico (ex: "Mouse"), a variável `$produto` dentro do `foreach` é passada por referência (`foreach ($produtos as &amp;$produto)`). Qual é o propósito de usar o `&amp;` (e comercial) nesse contexto?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Para criar uma cópia do array e evitar modificações no original.</li>
+                    <li><span>B)</span> Para que as alterações feitas em `$produto` dentro do loop afetem o array `$produtos` original.</li>
+                    <li><span>C)</span> Para indicar que `$produto` é um array associativo.</li>
+                    <li><span>D)</span> Para otimizar a performance do loop.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 22</strong><br>Considere o exemplo de código que remove o "Monitor" do array `$produtos`. Se o `unset($produtos[$chave]);` fosse omitido, o que aconteceria com o array `$produtos`?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> O elemento "Monitor" seria removido, mas o array seria reindexado.</li>
+                    <li><span>B)</span> O elemento "Monitor" permaneceria no array.</li>
+                    <li><span>C)</span> O script PHP geraria um erro fatal.</li>
+                    <li><span>D)</span> O array `$produtos` seria completamente esvaziado.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 23</strong><br>No exemplo de ordenação de um array de arrays por uma chave interna (`usort($produtos, function($a, $b) { return $a['nome'] <=> $b['nome']; });`), qual é o operador `&lt;=&gt;` e qual sua função?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> É o operador de comparação "maior ou igual", retornando `true` ou `false`.</li>
+                    <li><span>B)</span> É o operador "spaceship" (nave espacial), que retorna -1, 0 ou 1 dependendo da comparação.</li>
+                    <li><span>C)</span> É o operador de concatenação de strings.</li>
+                    <li><span>D)</span> É um operador de atribuição condicional.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 24</strong><br>Após a execução do seguinte trecho de código:</p>
+                <pre><code class="language-php">
+$itens = ["A", "B", "C"];
+unset($itens[1]);
+print_r($itens);
+                </code></pre>
+                <p>Qual seria a saída de `print_r($itens)`?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `Array ( [0] => A [1] => C )`</li>
+                    <li><span>B)</span> `Array ( [0] => A [2] => C )`</li>
+                    <li><span>C)</span> `Array ( [0] => A [1] => B [2] => C )`</li>
+                    <li><span>D)</span> `Array ( [0] => A [1] => [2] => C )`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 25</strong><br>No exemplo de "Listar produtos com preço > 100", por que é importante usar `number_format($produto["preco"], 2, ',', '.')` ao exibir o preço?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Para converter o preço para um formato de moeda internacional.</li>
+                    <li><span>B)</span> Para garantir que o preço tenha exatamente duas casas decimais e use vírgula como separador decimal.</li>
+                    <li><span>C)</span> Para arredondar o preço para o número inteiro mais próximo.</li>
+                    <li><span>D)</span> Para criptografar o valor do preço antes de exibi-lo.</li>
+                </ul>
+            </div>
+
+            <h3 id="arrays-exercicios">1.6. Exercícios Prático e Teórico</h3>
+            <div class="question-item">
+                <p><strong>Questão 26</strong><br>No exercício prático de Arrays, após criar o array `$livros` e adicionar um novo livro, qual seria a forma correta de atualizar o ano de publicação de um livro específico, por exemplo, o livro com título "Dom Casmurro" para o ano 1900?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `$livros["Dom Casmurro"]["ano"] = 1900;`</li>
+                    <li><span>B)</span> `foreach ($livros as &amp;$livro) { if ($livro["titulo"] == "Dom Casmurro") { $livro["ano"] = 1900; break; } }`</li>
+                    <li><span>C)</span> `array_update($livros, "Dom Casmurro", ["ano" => 1900]);`</li>
+                    <li><span>D)</span> `set_year($livros["Dom Casmurro"], 1900);`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 27</strong><br>No exercício teórico, a pergunta é sobre a principal diferença entre um array indexado e um array associativo. Qual das seguintes afirmações melhor descreve essa diferença?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Arrays indexados armazenam apenas números, enquanto associativos armazenam apenas strings.</li>
+                    <li><span>B)</span> Arrays indexados usam chaves numéricas automáticas, enquanto associativos usam chaves nomeadas definidas pelo programador.</li>
+                    <li><span>C)</span> Arrays indexados são mais rápidos que associativos.</li>
+                    <li><span>D)</span> Arrays associativos podem ter elementos duplicados, enquanto indexados não.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 28</strong><br>Se no exercício prático de Arrays, você precisasse remover um livro do array `$livros` pelo seu título (ex: "A Hora da Estrela"), qual seria a abordagem mais comum em PHP?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Usar `unset()` com o título como chave.</li>
+                    <li><span>B)</span> Iterar sobre o array com `foreach`, encontrar o livro pelo título e usar `unset()` com o índice/chave encontrado.</li>
+                    <li><span>C)</span> Usar `array_diff()` para remover o livro.</li>
+                    <li><span>D)</span> Criar um novo array sem o livro desejado.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 29</strong><br>Para ordenar o array de livros pelo título em ordem alfabética no exercício prático, considerando que `$livros` é um array de arrays associativos, qual função PHP seria a mais apropriada em conjunto com uma função de comparação personalizada?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `sort()`</li>
+                    <li><span>B)</span> `asort()`</li>
+                    <li><span>C)</span> `ksort()`</li>
+                    <li><span>D)</span> `usort()`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 30</strong><br>Qual é a principal finalidade de um array multidimensional em PHP?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Armazenar apenas números inteiros.</li>
+                    <li><span>B)</span> Representar dados tabulares ou hierárquicos, como uma lista de alunos com suas notas em diferentes disciplinas.</li>
+                    <li><span>C)</span> Apenas para otimização de memória.</li>
+                    <li><span>D)</span> Para criar uma lista simples de elementos sem chaves.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="quiz-section" id="html-geral">
+            <h2>2. HTML: Geral</h2>
+
+            <h3 id="html-tags">2.1. As 20 Tags Mais Usadas no HTML</h3>
+            <div class="question-item">
+                <p><strong>Questão 31</strong><br>Você está criando um novo documento HTML5. Qual é a primeira linha de código que você deve escrever para informar ao navegador o tipo de documento?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `<html>`</li>
+                    <li><span>B)</span> `<head>`</li>
+                    <li><span>C)</span> `<!DOCTYPE html>`</li>
+                    <li><span>D)</span> `<body>`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 32</strong><br>Qual tag HTML é usada para definir o título da página que aparece na aba do navegador ou na barra de título da janela?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `<header>`</li>
+                    <li><span>B)</span> `<title>`</li>
+                    <li><span>C)</span> `<h1>`</li>
+                    <li><span>D)</span> `<meta name="title">`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 33</strong><br>Para incluir um arquivo CSS externo chamado `estilos.css` em sua página HTML, qual tag e atributo você utilizaria dentro da seção `<head>`?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `<script src="estilos.css"></script>`</li>
+                    <li><span>B)</span> `<style src="estilos.css"></style>`</li>
+                    <li><span>C)</span> `<link rel="stylesheet" href="estilos.css">`</li>
+                    <li><span>D)</span> `<css href="estilos.css">`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 34</strong><br>Qual tag HTML é usada para incorporar uma imagem em uma página web?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `<picture>`</li>
+                    <li><span>B)</span> `<photo>`</li>
+                    <li><span>C)</span> `<image>`</li>
+                    <li><span>D)</span> `<img>`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 35</strong><br>Para agrupar um conjunto de elementos HTML para fins de estilização com CSS ou manipulação com JavaScript, qual tag de "contêiner genérico" é mais comumente utilizada?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `<span>`</li>
+                    <li><span>B)</span> `<p>`</li>
+                    <li><span>C)</span> `<div>`</li>
+                    <li><span>D)</span> `<a>`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 36</strong><br>Qual das seguintes tags HTML é usada para criar uma lista de itens com marcadores (bolinhas, quadrados, etc.)?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `<ol>`</li>
+                    <li><span>B)</span> `<dl>`</li>
+                    <li><span>C)</span> `<ul>`</li>
+                    <li><span>D)</span> `<list>`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 37</strong><br>Se você precisa criar um título de seção muito importante em sua página, qual tag de cabeçalho HTML você deve usar para indicar a maior relevância semântica?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `<h2>`</li>
+                    <li><span>B)</span> `<h4>`</li>
+                    <li><span>C)</span> `<h1>`</li>
+                    <li><span>D)</span> `<h6>`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 38</strong><br>Qual tag HTML é usada para definir um parágrafo de texto?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `<text>`</li>
+                    <li><span>B)</span> `<paragraph>`</li>
+                    <li><span>C)</span> `<p>`</li>
+                    <li><span>D)</span> `<line>`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 39</strong><br>Para criar um link clicável que redireciona o usuário para outra página web, qual tag HTML é utilizada?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `<link>`</li>
+                    <li><span>B)</span> `<href>`</li>
+                    <li><span>C)</span> `<a>`</li>
+                    <li><span>D)</span> `<url>`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 40</strong><br>Qual tag HTML é usada para definir uma linha em uma tabela?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `<td>`</li>
+                    <li><span>B)</span> `<th>`</li>
+                    <li><span>C)</span> `<tr>`</li>
+                    <li><span>D)</span> `<table>`</li>
+                </ul>
+            </div>
+
+            <h3 id="html-estrutura">2.2. Ordem da Estrutura da Página HTML</h3>
+            <div class="question-item">
+                <p><strong>Questão 41</strong><br>A tag `<html>` é o elemento raiz de um documento HTML. Qual atributo é comumente adicionado a ela para especificar o idioma principal do conteúdo da página?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `charset`</li>
+                    <li><span>B)</span> `src`</li>
+                    <li><span>C)</span> `lang`</li>
+                    <li><span>D)</span> `type`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 42</strong><br>Qual é a principal função da tag `<head>` em um documento HTML?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Conter todo o conteúdo visível da página.</li>
+                    <li><span>B)</span> Definir a estrutura do formulário.</li>
+                    <li><span>C)</span> Armazenar metadados sobre a página e links para recursos externos (CSS, JS).</li>
+                    <li><span>D)</span> Criar cabeçalhos e rodapés da página.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 43</strong><br>A tag `<body>` é onde todo o conteúdo visível de uma página HTML é colocado. Se você tiver um script JavaScript que manipula elementos do DOM, onde é uma boa prática incluir a tag `<script1>` para garantir que o HTML já esteja carregado antes da execução do script?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> No início da tag `<head>`.</li>
+                    <li><span>B)</span> Após a tag `<title>` dentro do `<head>`.</li>
+                    <li><span>C)</span> No final da tag `<body>`, antes de `</body>`.</li>
+                    <li><span>D)</span> Em qualquer lugar dentro do `<body>`.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 44</strong><br>Qual tag `<meta>` é essencial para garantir que a página seja renderizada corretamente em diferentes dispositivos (responsividade)?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `<meta charset="UTF-8">`</li>
+                    <li><span>B)</span> `<meta name="description" content="...">`</li>
+                    <li><span>C)</span> `<meta name="viewport" content="width=device-width, initial-scale=1.0">`</li>
+                    <li><span>D)</span> `<meta http-equiv="refresh" content="5">`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 45</strong><br>Considerando a estrutura básica de um documento HTML, qual das seguintes tags é a única que não tem uma tag de fechamento correspondente (`</tag>`)?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `<html>`</li>
+                    <li><span>B)</span> `<p>`</li>
+                    <li><span>C)</span> `<img>`</li>
+                    <li><span>D)</span> `<div>`</li>
+                </ul>
+            </div>
+
+            <h3 id="html-explicacao-tags">2.3. Explicação sobre Cada uma das 20 Tags</h3>
+            <div class="question-item">
+                <p><strong>Questão 46</strong><br>A tag `<meta>` é muito versátil. Qual de seus atributos é usado para especificar o conjunto de caracteres do documento, garantindo que caracteres especiais sejam exibidos corretamente?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `name`</li>
+                    <li><span>B)</span> `content`</li>
+                    <li><span>C)</span> `http-equiv`</li>
+                    <li><span>D)</span> `charset`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 47</strong><br>Qual é a diferença fundamental entre as tags `<div>` e `<span>` em termos de como elas afetam o layout padrão de uma página?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `<div>` é um elemento de linha (inline), e `<span>` é um elemento de bloco (block).</li>
+                    <li><span>B)</span> `<div>` é um elemento de bloco (block), e `<span>` é um elemento de linha (inline).</li>
+                    <li><span>C)</span> Ambos são elementos de bloco, mas `<div>` é para texto e `<span>` para imagens.</li>
+                    <li><span>D)</span> Ambos são elementos de linha, mas `<div>` é para agrupamento e `<span>` para estilização.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 48</strong><br>Para que serve o atributo `alt` na tag `<img>`?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Define o alinhamento da imagem na página.</li>
+                    <li><span>B)</span> Fornece um texto alternativo para a imagem, importante para acessibilidade e SEO.</li>
+                    <li><span>C)</span> Especifica a altura da imagem em pixels.</li>
+                    <li><span>D)</span> Indica a URL de uma imagem de backup.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 49</strong><br>Você está criando uma lista de passos a seguir em uma receita. Qual tag HTML você usaria para garantir que os passos sejam numerados automaticamente?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `<ul>`</li>
+                    <li><span>B)</span> `<dl>`</li>
+                    <li><span>C)</span> `<ol>`</li>
+                    <li><span>D)</span> `<list>`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 50</strong><br>Qual é o propósito da tag `<th>` dentro de uma tabela HTML?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Definir uma célula de dados comum.</li>
+                    <li><span>B)</span> Definir o cabeçalho da tabela.</li>
+                    <li><span>C)</span> Definir uma linha da tabela.</li>
+                    <li><span>D)</span> Definir uma célula de cabeçalho para uma coluna ou linha da tabela.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="quiz-section" id="html-forms">
+            <h2>3. HTML: Formulário</h2>
+
+            <h3 id="forms-componentes">3.1. Os 20 Itens que Compõem o Formulário</h3>
+            <div class="question-item">
+                <p><strong>Questão 51</strong><br>Qual atributo da tag `<form>` é responsável por especificar a URL para onde os dados do formulário serão enviados após o clique no botão de submit?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `method`</li>
+                    <li><span>B)</span> `enctype`</li>
+                    <li><span>C)</span> `action`</li>
+                    <li><span>D)</span> `target`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 52</strong><br>Para um campo onde o usuário deve digitar um valor numérico (ex: idade, quantidade), qual `type` da tag `<input>` é o mais apropriado para fornecer validação básica e controles de incremento/decremento no navegador?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `type="text"`</li>
+                    <li><span>B)</span> `type="number"`</li>
+                    <li><span>C)</span> `type="range"`</li>
+                    <li><span>D)</span> `type="decimal"`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 53</strong><br>Você precisa criar uma opção em um formulário onde o usuário pode selecionar várias opções de uma lista (ex: "Interesses: Esportes, Tecnologia, Arte"). Qual `type` da tag `<input>` é o mais adequado para essa funcionalidade?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `type="radio"`</li>
+                    <li><span>B)</span> `type="select"`</li>
+                    <li><span>C)</span> `type="checkbox"`</li>
+                    <li><span>D)</span> `type="list"`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 54</strong><br>Qual tag HTML é usada para criar uma área de texto de múltiplas linhas, ideal para mensagens longas ou descrições?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `<input type="textarea">`</li>
+                    <li><span>B)</span> `<textblock>`</li>
+                    <li><span>C)</span> `<textarea>`</li>
+                    <li><span>D)</span> `<input type="text" rows="X">`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 55</strong><br>Em um formulário, qual tag é usada para associar um rótulo de texto a um elemento de entrada (como um `input` ou `textarea`), melhorando a acessibilidade e a usabilidade?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `<span>`</li>
+                    <li><span>B)</span> `<strong>`</li>
+                    <li><span>C)</span> `<label>`</li>
+                    <li><span>D)</span> `<p>`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 56</strong><br>Qual é a principal diferença entre `<input type="submit">` e `<button type="submit">`?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `input type="submit"` só pode ter texto como valor, enquanto `button` pode conter HTML.</li>
+                    <li><span>B)</span> `button type="submit"` só pode ser usado com JavaScript, enquanto `input type="submit"` não.</li>
+                    <li><span>C)</span> `input type="submit"` é mais moderno que `button type="submit"`.</li>
+                    <li><span>D)</span> Não há diferença funcional, apenas sintática.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 57</strong><br>Você precisa de um campo de entrada que permita ao usuário selecionar um arquivo do seu computador para upload. Qual `type` da tag `<input>` deve ser usado?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `type="text"`</li>
+                    <li><span>B)</span> `type="url"`</li>
+                    <li><span>C)</span> `type="file"`</li>
+                    <li><span>D)</span> `type="document"`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 58</strong><br>Para um campo de formulário que deve ser preenchido com um endereço de e-mail, qual `type` do `input` oferece validação de formato básica em nível de navegador?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `type="text"`</li>
+                    <li><span>B)</span> `type="email"`</li>
+                    <li><span>C)</span> `type="url"`</li>
+                    <li><span>D)</span> `type="string"`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 59</strong><br>Qual tag é usada para criar uma lista suspensa (dropdown) de opções em um formulário?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `<list>`</li>
+                    <li><span>B)</span> `<options>`</li>
+                    <li><span>C)</span> `<select>`</li>
+                    <li><span>D)</span> `<dropdown>`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 60</strong><br>Para um campo de formulário que deve ser invisível para o usuário, mas que precisa enviar um valor específico junto com os outros dados do formulário, qual `type` da tag `<input>` é o mais adequado?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `type="text"` com `style="display:none;"`</li>
+                    <li><span>B)</span> `type="hidden"`</li>
+                    <li><span>C)</span> `type="invisible"`</li>
+                    <li><span>D)</span> `type="data"`</li>
+                </ul>
+            </div>
+
+            <h3 id="forms-estrutura">3.2. Ordem da Estrutura de Cada Item</h3>
+            <div class="question-item">
+                <p><strong>Questão 61</strong><br>Ao estruturar um formulário HTML, qual é a ordem recomendada para os elementos principais de um campo de entrada, como um campo de texto para o nome do usuário?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `&lt;input&gt;`, `&lt;label&gt;`, `&lt;br&gt;`</li>
+                    <li><span>B)</span> `&lt;label&gt;`, `&lt;input&gt;`, `&lt;br&gt;`</li>
+                    <li><span>C)</span> `&lt;br&gt;`, `&lt;label&gt;`, `&lt;input&gt;`</li>
+                    <li><span>D)</span> `&lt;input&gt;`, `&lt;br&gt;`, `&lt;label&gt;`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 62</strong><br>Em um grupo de botões de rádio (radio buttons), o que é essencial para garantir que apenas uma opção possa ser selecionada dentro daquele grupo?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Todos os botões de rádio devem ter IDs únicos.</li>
+                    <li><span>B)</span> Todos os botões de rádio devem ter o mesmo atributo `name`.</li>
+                    <li><span>C)</span> Todos os botões de rádio devem ter o atributo `value` diferente.</li>
+                    <li><span>D)</span> Todos os botões de rádio devem estar dentro de uma tag `<fieldset>`.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 63</strong><br>Ao criar uma lista suspensa (`<select>`), onde as tags `<option>` devem ser aninhadas?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Diretamente dentro do `<form>`.</li>
+                    <li><span>B)</span> Dentro da tag `<select>`.</li>
+                    <li><span>C)</span> Dentro de uma tag `<label>` para o `<select>`.</li>
+                    <li><span>D)</span> Após a tag de fechamento `</select>`.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 64</strong><br>Se você tem um formulário com um `<input type="reset">`, qual é o comportamento padrão desse botão quando clicado?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Envia o formulário para o servidor.</li>
+                    <li><span>B)</span> Limpa todos os campos do formulário, restaurando seus valores iniciais.</li>
+                    <li><span>C)</span> Abre uma nova janela do navegador.</li>
+                    <li><span>D)</span> Recarrega a página.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 65</strong><br>Qual é a principal vantagem de usar a tag `<label>` associada a um campo de formulário com o atributo `for` apontando para o `id` do campo?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Apenas para fins de estilização CSS.</li>
+                    <li><span>B)</span> Melhora a acessibilidade, permitindo que usuários de leitores de tela entendam a função do campo, e aumenta a área clicável do rótulo.</li>
+                    <li><span>C)</span> É necessário para que o campo seja enviado ao servidor.</li>
+                    <li><span>D)</span> Define o valor padrão do campo.</li>
+                </ul>
+            </div>
+
+            <h3 id="forms-explicacao-componentes">3.3. Explicação sobre Cada um dos 20 Componentes</h3>
+            <div class="question-item">
+                <p><strong>Questão 66</strong><br>Qual atributo da tag `<form>` é usado para especificar se os dados do formulário serão visíveis na URL (`GET`) ou enviados no corpo da requisição (`POST`)?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `action`</li>
+                    <li><span>B)</span> `name`</li>
+                    <li><span>C)</span> `method`</li>
+                    <li><span>D)</span> `data-type`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 67</strong><br>Para um campo de senha (`<input type="password">`), qual atributo é comumente usado para definir um comprimento mínimo de caracteres que o usuário deve inserir?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `maxlength`</li>
+                    <li><span>B)</span> `size`</li>
+                    <li><span>C)</span> `minlength`</li>
+                    <li><span>D)</span> `pattern`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 68</strong><br>A tag `<input type="checkbox">` é diferente de `<input type="radio">` porque:</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Checkboxes permitem apenas uma seleção, radios permitem múltiplas.</li>
+                    <li><span>B)</span> Checkboxes são para texto, radios são para números.</li>
+                    <li><span>C)</span> Checkboxes permitem múltiplas seleções, radios permitem apenas uma em um grupo.</li>
+                    <li><span>D)</span> Radios são visíveis, checkboxes são invisíveis.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 69</strong><br>Qual é a função do atributo `placeholder` em um `<input type="text">`?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Define o valor padrão do campo.</li>
+                    <li><span>B)</span> Fornece um texto de exemplo ou uma dica sobre o formato esperado, que desaparece quando o usuário começa a digitar.</li>
+                    <li><span>C)</span> Define o rótulo do campo.</li>
+                    <li><span>D)</span> Torna o campo obrigatório.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 70</strong><br>Qual é o propósito da tag `<legend>` quando usada em conjunto com `<fieldset>`?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Criar um título para a página.</li>
+                    <li><span>B)</span> Fornecer uma legenda para uma imagem.</li>
+                    <li><span>C)</span> Definir um cabeçalho para uma tabela.</li>
+                    <li><span>D)</span> Fornecer um título ou descrição para o grupo de campos dentro do `<fieldset>`.</li>
+                </ul>
+            </div>
+
+            <h3 id="forms-exemplos">3.4. Exemplos</h3>
+            <div class="question-item">
+                <p><strong>Questão 71</strong><br>No "Exemplo 1: Formulário de Contato Simples", se o usuário preencher o campo "Seu Nome" com "Ana" e o campo "Mensagem" com "Olá!", qual seria o `name` do campo que conteria "Olá!"?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `nome_contato`</li>
+                    <li><span>B)</span> `email_contato`</li>
+                    <li><span>C)</span> `assunto`</li>
+                    <li><span>D)</span> `mensagem_contato`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 72</strong><br>No "Exemplo 2: Formulário de Cadastro com Opções", se o usuário selecionar "Esportes" e "Tecnologia" nos checkboxes "Interesses", como esses valores seriam enviados ao script PHP?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Como uma única string concatenada (ex: "esportes,tecnologia").</li>
+                    <li><span>B)</span> Como um array PHP chamado `$_POST['interesses']` contendo `["esportes", "tecnologia"]`.</li>
+                    <li><span>C)</span> Apenas o último valor selecionado seria enviado.</li>
+                    <li><span>D)</span> Os valores seriam ignorados porque checkboxes não enviam dados.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 73</strong><br>Ainda no "Exemplo 2: Formulário de Cadastro com Opções", se o usuário selecionar "Intermediário" no campo "Nível de Experiência", qual valor seria enviado ao script PHP para o `name="nivel"`?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> "Intermediário"</li>
+                    <li><span>B)</span> "intermediario"</li>
+                    <li><span>C)</span> O índice numérico da opção.</li>
+                    <li><span>D)</span> O texto visível da opção.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 74</strong><br>Qual é o propósito do atributo `required` em campos de formulário como `<input type="text" id="nome" name="nome" required>`?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Define um valor padrão para o campo.</li>
+                    <li><span>B)</span> Impede que o usuário digite mais de um caractere.</li>
+                    <li><span>C)</span> Torna o preenchimento do campo obrigatório antes do envio do formulário.</li>
+                    <li><span>D)</span> Indica que o campo deve ser validado por JavaScript.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 75</strong><br>No "Exemplo 1: Formulário de Contato Simples", se o atributo `method` fosse alterado para `GET`, onde os dados do formulário seriam visíveis após o envio?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Apenas no console do navegador.</li>
+                    <li><span>B)</span> No corpo da requisição HTTP.</li>
+                    <li><span>C)</span> Na URL da página de destino.</li>
+                    <li><span>D)</span> Em um arquivo de log no servidor.</li>
+                </ul>
+            </div>
+
+            <h3 id="forms-exercicios">3.5. Exercícios Prático e Teórico</h3>
+            <div class="question-item">
+                <p><strong>Questão 76</strong><br>No exercício prático de Formulários, para a "Categoria" do produto, que deve ser uma lista suspensa com 3 opções ("Eletrônicos", "Vestuário", "Alimentos"), qual seria a estrutura HTML correta para a tag `<select>` e suas `<option>`s?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `<select name="categoria"><option>Eletrônicos</option><option>Vestuário</option><option>Alimentos</option></select>`</li>
+                    <li><span>B)</span> `<input type="select" name="categoria" options="Eletrônicos,Vestuário,Alimentos">`</li>
+                    <li><span>C)</span> `<dropdown name="categoria"><item>Eletrônicos</item><item>Vestuário</item><item>Alimentos</item></dropdown>`</li>
+                    <li><span>D)</span> `<select name="categoria" value="Eletrônicos,Vestuário,Alimentos"></select>`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 77</strong><br>No exercício teórico, a pergunta é sobre a diferença entre os métodos `GET` e `POST`. Qual das seguintes afirmações é verdadeira sobre o método `POST`?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Os dados são enviados na URL e são visíveis para o usuário.</li>
+                    <li><span>B)</span> É ideal para enviar dados sensíveis, como senhas, pois os dados são enviados no corpo da requisição.</li>
+                    <li><span>C)</span> É limitado na quantidade de dados que pode enviar.</li>
+                    <li><span>D)</span> É usado principalmente para solicitar dados do servidor sem modificá-los.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 78</strong><br>Se no exercício prático de Formulários, o campo "Disponível para Venda" fosse um checkbox, e o usuário o marcasse, qual valor seria enviado ao script PHP se o `name` fosse `disponivel` e o `value` fosse `sim`?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `true`</li>
+                    <li><span>B)</span> `1`</li>
+                    <li><span>C)</span> `sim`</li>
+                    <li><span>D)</span> O checkbox não envia valor se marcado.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 79</strong><br>Qual é a principal razão para usar o método `GET` em um formulário, em vez de `POST`?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Quando se está enviando dados sensíveis como senhas.</li>
+                    <li><span>B)</span> Quando se quer que os dados sejam marcáveis (bookmarkable) e compartilháveis via URL.</li>
+                    <li><span>C)</span> Quando se está fazendo upload de arquivos grandes.</li>
+                    <li><span>D)</span> Quando se precisa de maior segurança na transmissão dos dados.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 80</strong><br>No contexto de formulários HTML, qual é a finalidade de um botão com `type="submit"`?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Limpar todos os campos do formulário.</li>
+                    <li><span>B)</span> Executar um script JavaScript sem enviar o formulário.</li>
+                    <li><span>C)</span> Enviar os dados do formulário para o URL especificado no atributo `action`.</li>
+                    <li><span>D)</span> Recarregar a página atual.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="quiz-section" id="php-forms-db">
+            <h2>4. PHP: Manipulação de Formulários e Banco de Dados</h2>
+
+            <h3 id="php-destino-formulario">4.1. Destino do Formulário é a Página de Recepção dos Dados</h3>
+            <div class="question-item">
+                <p><strong>Questão 81</strong><br>Em um formulário HTML, o atributo `action` da tag `<form>` aponta para `processa_dados.php`. O que isso significa?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> O formulário será processado por um script JavaScript chamado `processa_dados.php`.</li>
+                    <li><span>B)</span> Os dados do formulário serão enviados para o arquivo `processa_dados.php` no servidor para serem processados.</li>
+                    <li><span>C)</span> O navegador tentará abrir um arquivo HTML chamado `processa_dados.php`.</li>
+                    <li><span>D)</span> O formulário será validado pelo arquivo `processa_dados.php` no lado do cliente.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 82</strong><br>Se o atributo `action` de um formulário estiver vazio (`action=""`), para onde os dados do formulário serão enviados?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Para a página inicial do site.</li>
+                    <li><span>B)</span> Para a mesma página onde o formulário está localizado.</li>
+                    <li><span>C)</span> Para uma página padrão definida pelo servidor.</li>
+                    <li><span>D)</span> Os dados não serão enviados, resultando em um erro.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 83</strong><br>Qual é o papel do atributo `method` na tag `<form>` em relação ao destino dos dados?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Ele define o tipo de dados que podem ser enviados.</li>
+                    <li><span>B)</span> Ele especifica como os dados serão empacotados e enviados para a URL definida em `action`.</li>
+                    <li><span>C)</span> Ele determina se o formulário será validado no lado do cliente ou do servidor.</li>
+                    <li><span>D)</span> Ele indica se o formulário deve ser enviado via HTTPS.</li>
+                </ul>
+            </div>
+
+            <h3 id="php-post-array">4.2. Variável $_POST é um ARRAY</h3>
+            <div class="question-item">
+                <p><strong>Questão 84</strong><br>Quando um formulário HTML é enviado usando o método `POST`, onde o PHP armazena automaticamente os dados de todos os campos do formulário?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Na variável global `$_GET`.</li>
+                    <li><span>B)</span> Na variável global `$_REQUEST`.</li>
+                    <li><span>C)</span> Na variável global `$_POST`.</li>
+                    <li><span>D)</span> Em um arquivo temporário no servidor.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 85</strong><br>Se um campo de formulário HTML tem `name="usuario_login"`, como você acessaria o valor digitado por um usuário nesse campo em seu script PHP (assumindo o método `POST`)?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `$usuario_login`</li>
+                    <li><span>B)</span> `$_GET['usuario_login']`</li>
+                    <li><span>C)</span> `$_POST['usuario_login']`</li>
+                    <li><span>D)</span> `$_REQUEST->usuario_login`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 86</strong><br>Qual é a estrutura de dados da superglobal `$_POST` em PHP?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Um objeto.</li>
+                    <li><span>B)</span> Uma string.</li>
+                    <li><span>C)</span> Um array associativo.</li>
+                    <li><span>D)</span> Um array indexado.</li>
+                </ul>
+            </div>
+
+            <h3 id="php-atribuicao-variaveis">4.3. Atribuição às Variáveis dos Valores Vindos do Formulário</h3>
+            <div class="question-item">
+                <p><strong>Questão 87</strong><br>Por que é considerada uma boa prática atribuir os valores recebidos de `$_POST` (ou `$_GET`) a variáveis locais em PHP, como `$nome_usuario = $_POST['usuario'];`?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Para que os valores sejam automaticamente sanitizados.</li>
+                    <li><span>B)</span> Para evitar ataques de injeção de código.</li>
+                    <li><span>C)</span> Para melhorar a legibilidade do código e facilitar o uso posterior dos dados.</li>
+                    <li><span>D)</span> Para que os dados sejam armazenados permanentemente no servidor.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 88</strong><br>Se um campo de formulário não for preenchido pelo usuário e for enviado via `POST`, qual será o valor correspondente em `$_POST` para esse campo?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `null`</li>
+                    <li><span>B)</span> Uma string vazia (`''`)</li>
+                    <li><span>C)</span> `false`</li>
+                    <li><span>D)</span> O campo não existirá no array `$_POST`.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 89</strong><br>Qual função PHP é comumente usada para verificar se uma variável (como um valor de `$_POST`) está vazia ou não definida?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `isset()`</li>
+                    <li><span>B)</span> `empty()`</li>
+                    <li><span>C)</span> `is_null()`</li>
+                    <li><span>D)</span> `is_set()`</li>
+                </ul>
+            </div>
+
+            <h3 id="php-tratamento-manipulacao">4.4. Tratamento e Manipulação das Variáveis Criadas</h3>
+            <div class="question-item">
+                <p><strong>Questão 90</strong><br>Você recebeu um campo de texto (`$_POST['comentario']`) que pode conter tags HTML maliciosas. Qual função PHP você usaria para converter essas tags em entidades HTML, prevenindo ataques XSS (Cross-Site Scripting) ao exibir o comentário?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `strip_tags()`</li>
+                    <li><span>B)</span> `trim()`</li>
+                    <li><span>C)</span> `htmlspecialchars()`</li>
+                    <li><span>D)</span> `str_replace()`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 91</strong><br>Para remover espaços em branco (início e fim) de uma string recebida de um formulário, qual função PHP é a mais adequada?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `str_trim()`</li>
+                    <li><span>B)</span> `trim()`</li>
+                    <li><span>C)</span> `strip_whitespace()`</li>
+                    <li><span>D)</span> `clean_string()`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 92</strong><br>Você espera que um campo de formulário (`$_POST['idade']`) contenha um número inteiro. Qual é a forma mais simples e direta de converter o valor recebido para um tipo inteiro em PHP?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `intval($_POST['idade'])`</li>
+                    <li><span>B)</span> `(int)$_POST['idade']`</li>
+                    <li><span>C)</span> `settype($_POST['idade'], 'integer')`</li>
+                    <li><span>D)</span> `filter_var($_POST['idade'], FILTER_VALIDATE_INT)`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 93</strong><br>Qual é a principal razão para validar os dados recebidos de um formulário antes de usá-los (ex: inserir no banco de dados)?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Para tornar o código mais complexo.</li>
+                    <li><span>B)</span> Para garantir que os dados estejam no formato e tipo esperados, e para prevenir vulnerabilidades de segurança.</li>
+                    <li><span>C)</span> Para acelerar o processamento do formulário.</li>
+                    <li><span>D)</span> Para exibir mensagens de erro mais bonitas no navegador.</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 94</strong><br>Para validar se um email recebido de um formulário (`$email_usuario`) tem um formato de e-mail válido, qual filtro da função `filter_var()` você utilizaria em PHP?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `FILTER_SANITIZE_EMAIL`</li>
+                    <li><span>B)</span> `FILTER_VALIDATE_EMAIL`</li>
+                    <li><span>C)</span> `FILTER_VALIDATE_STRING`</li>
+                    <li><span>D)</span> `FILTER_SANITIZE_STRING`</li>
+                </ul>
+            </div>
+
+            <h3 id="php-acesso-banco">4.5. Acesso Autorizado ao Banco</h3>
+            <div class="question-item">
+                <p><strong>Questão 95</strong><br>Qual extensão PHP é a abordagem recomendada e mais segura para interagir com bancos de dados relacionais, oferecendo uma camada de abstração e suporte a Prepared Statements?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> MySQLi</li>
+                    <li><span>B)</span> cURL</li>
+                    <li><span>C)</span> PDO (PHP Data Objects)</li>
+                    <li><span>D)</span> XML</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 96</strong><br>Ao estabelecer uma conexão PDO com um banco de dados MySQL, qual parte da string DSN (`mysql:host=$host;dbname=$db;charset=$charset`) especifica o nome do banco de dados ao qual você deseja se conectar?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `host`</li>
+                    <li><span>B)</span> `charset`</li>
+                    <li><span>C)</span> `dbname`</li>
+                    <li><span>D)</span> `mysql`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 97</strong><br>Qual opção de PDO (`PDO::ATTR_ERRMODE`) é crucial para configurar o tratamento de erros, fazendo com que o PDO lance exceções em caso de erros SQL, facilitando a depuração e o tratamento de erros?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `PDO::ERRMODE_SILENT`</li>
+                    <li><span>B)</span> `PDO::ERRMODE_WARNING`</li>
+                    <li><span>C)</span> `PDO::ERRMODE_EXCEPTION`</li>
+                    <li><span>D)</span> `PDO::ERRMODE_NONE`</li>
+                </ul>
+            </div>
+
+            <h3 id="php-crud-sql">4.6. CRUD Através do PHP (Comandos SQL)</h3>
+            <div class="question-item">
+                <p><strong>Questão 98</strong><br>Para inserir novos dados em uma tabela de banco de dados usando PHP e PDO, qual comando SQL você utilizaria?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `SELECT`</li>
+                    <li><span>B)</span> `UPDATE`</li>
+                    <li><span>C)</span> `INSERT INTO`</li>
+                    <li><span>D)</span> `DELETE FROM`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 99</strong><br>Você precisa recuperar todos os produtos da tabela `Produtos` que custam mais de R$ 500,00. Qual comando SQL você usaria em conjunto com `PDO::prepare()` e `execute()` para essa consulta segura?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> `INSERT INTO Produtos (preco) VALUES (500)`</li>
+                    <li><span>B)</span> `DELETE FROM Produtos WHERE preco > 500`</li>
+                    <li><span>C)</span> `SELECT * FROM Produtos WHERE preco > :min_preco`</li>
+                    <li><span>D)</span> `UPDATE Produtos SET preco = 500 WHERE id = 1`</li>
+                </ul>
+            </div>
+            <div class="question-item">
+                <p><strong>Questão 100</strong><br>Qual é a principal vantagem de usar Prepared Statements (via `PDO::prepare()` e `PDOStatement::execute()`) para executar comandos SQL que envolvem dados do usuário, em vez de concatenar strings diretamente na consulta SQL?</p>
+                <ul class="question-alternatives">
+                    <li><span>A)</span> Torna o código mais curto.</li>
+                    <li><span>B)</span> Melhora a performance da consulta em todas as situações.</li>
+                    <li><span>C)</span> Previne ataques de Injeção SQL, separando o código SQL dos dados.</li>
+                    <li><span>D)</span> Permite usar diferentes tipos de banco de dados sem alterar a consulta SQL.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="gabarito">
+            <h3>Gabarito</h3>
+            <ul>
+                <li>1. B</li>
+                <li>2. C</li>
+                <li>3. C</li>
+                <li>4. B</li>
+                <li>5. C</li>
+                <li>6. C</li>
+                <li>7. B</li>
+                <li>8. C</li>
+                <li>9. B</li>
+                <li>10. C</li>
+                <li>11. C</li>
+                <li>12. C</li>
+                <li>13. C</li>
+                <li>14. C</li>
+                <li>15. B</li>
+                <li>16. C</li>
+                <li>17. C</li>
+                <li>18. A</li>
+                <li>19. C</li>
+                <li>20. D</li>
+                <li>21. B</li>
+                <li>22. B</li>
+                <li>23. B</li>
+                <li>24. B</li>
+                <li>25. B</li>
+                <li>26. B</li>
+                <li>27. B</li>
+                <li>28. B</li>
+                <li>29. D</li>
+                <li>30. B</li>
+                <li>31. C</li>
+                <li>32. B</li>
+                <li>33. C</li>
+                <li>34. D</li>
+                <li>35. C</li>
+                <li>36. C</li>
+                <li>37. C</li>
+                <li>38. C</li>
+                <li>39. C</li>
+                <li>40. C</li>
+                <li>41. C</li>
+                <li>42. C</li>
+                <li>43. C</li>
+                <li>44. C</li>
+                <li>45. C</li>
+                <li>46. D</li>
+                <li>47. B</li>
+                <li>48. B</li>
+                <li>49. C</li>
+                <li>50. D</li>
+                <li>51. C</li>
+                <li>52. B</li>
+                <li>53. C</li>
+                <li>54. C</li>
+                <li>55. C</li>
+                <li>56. A</li>
+                <li>57. C</li>
+                <li>58. B</li>
+                <li>59. C</li>
+                <li>60. B</li>
+                <li>61. B</li>
+                <li>62. B</li>
+                <li>63. B</li>
+                <li>64. B</li>
+                <li>65. B</li>
+                <li>66. C</li>
+                <li>67. C</li>
+                <li>68. C</li>
+                <li>69. B</li>
+                <li>70. D</li>
+                <li>71. D</li>
+                <li>72. B</li>
+                <li>73. B</li>
+                <li>74. C</li>
+                <li>75. C</li>
+                <li>76. A</li>
+                <li>77. B</li>
+                <li>78. C</li>
+                <li>79. B</li>
+                <li>80. C</li>
+                <li>81. B</li>
+                <li>82. B</li>
+                <li>83. B</li>
+                <li>84. C</li>
+                <li>85. C</li>
+                <li>86. C</li>
+                <li>87. C</li>
+                <li>88. D</li>
+                <li>89. B</li>
+                <li>90. C</li>
+                <li>91. B</li>
+                <li>92. B</li>
+                <li>93. B</li>
+                <li>94. B</li>
+                <li>95. C</li>
+                <li>96. C</li>
+                <li>97. C</li>
+                <li>98. C</li>
+                <li>99. C</li>
+                <li>100. C</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- highlight.js JavaScript para coloração de código -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inicializa a coloração de sintaxe do highlight.js
+            hljs.highlightAll();
+            console.log("Questionário Extenso de PHP, HTML e Formulários carregado e pronto para impressão!");
+        });
+    </script>
+</body>
+</html>

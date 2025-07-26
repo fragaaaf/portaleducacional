@@ -1,0 +1,274 @@
+/* style.css */
+/*Atualizado em 18/07/2025, às 11:20, por Alberto Fraga */
+ /* Foco: 'Subtipos de Questão (Resposta Aberta)' -Controle de Seleção e Estado dos Checkboxes */
+/* Estilo para checkboxes desabilitados/acinzentados */
+.disabled-label {
+    color: #aaa; /* Cor do texto mais clara */
+    cursor: not-allowed; /* Cursor de "não permitido" */
+    opacity: 0.7; /* Levemente opaco */
+}
+
+.disabled-label input[type="checkbox"] {
+    cursor: not-allowed;
+}
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.4; /* Ajuste para diminuir o espaçamento entre linhas do corpo */
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #333;
+    text-align: center;
+}
+
+h2 {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-top: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box; /* Garante que padding não aumente a largura */
+}
+
+.checkbox-group, .radio-group {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os itens quebrem linha */
+    gap: 10px;
+    padding: 5px 0;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.checkbox-group div, .radio-group div {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.checkbox-group label, .radio-group label {
+    margin-bottom: 0; /* Remove margin-bottom padrão */
+    margin-left: 5px;
+    font-weight: normal;
+    display: inline-flex; /* Para alinhar o texto com o checkbox */
+    align-items: center;
+    cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"],
+.radio-group input[type="radio"] {
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    align-self: flex-start; /* Alinha o botão à esquerda */
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+    display: none; /* Escondido por padrão */
+}
+
+/* Estilos para a área de resultados da prova */
+.quiz-result-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    line-height: 1.2; /* Reduz o espaçamento de linha para o conteúdo da prova */
+}
+
+.quiz-result-container h2 {
+    color: #0056b3;
+    text-align: left;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+.quiz-result-container p {
+    margin-bottom: 0.5em; /* Reduz o espaçamento entre parágrafos */
+    margin-top: 0.5em;
+}
+
+.quiz-result-container strong {
+    color: #555;
+}
+
+.question-code {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    padding: 8px;
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace;
+    white-space: pre-wrap; /* Garante que o código quebre linha */
+    word-wrap: break-word; /* Permite que palavras longas quebrem */
+    line-height: 1.2; /* Reduz o espaçamento de linha para o bloco de código */
+    margin-top: 5px;
+    margin-bottom: 10px; /* Espaçamento abaixo do bloco de código */
+    font-size: 0.85em; /* Diminui um pouco o tamanho da fonte do código */
+}
+
+/* Estilo para a quebra de página */
+.quebra-de-pagina {
+    page-break-after: always;
+}
+
+/* Estilos para o tamanho da fonte condicional */
+.prova-content {
+    font-size: 11pt; /* Fonte padrão para as provas */
+    line-height: 1.2;
+}
+
+.prova-content.font-size-large {
+    font-size: 14pt; /* Fonte maior para casos específicos */
+    line-height: 1.3; /* Ajuste a linha para a fonte maior */
+}
+
+
+/* Estilos para o link de voltar ao formulário */
+.back-to-form-link {
+    display: block;
+    margin: 10px 0;
+    text-align: center;
+    font-size: 1em;
+}
+
+.back-to-form-link a {
+    color: #007bff;
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+}
+
+.back-to-form-link a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+
+/* Ocultar elementos do formulário na impressão */
+@media print {
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #fff; /* Fundo branco para impressão */
+    }
+
+    .container {
+        box-shadow: none; /* Remove sombra na impressão */
+        margin: 0;
+        padding: 0;
+        border-radius: 0;
+        max-width: none;
+    }
+
+    form, button, .error-message, .quiz-result-container h2:first-of-type, hr {
+        display: none; /* Oculta o formulário e elementos não relacionados à prova */
+    }
+
+    /* Garante que o conteúdo da prova seja exibido */
+    .quiz-result-container {
+        margin-top: 0;
+        box-shadow: none;
+        padding: 0;
+        /* line-height e font-size são definidos em .prova-content */
+    }
+
+    .prova-content {
+        font-size: 11pt; /* Padrão para impressão */
+        line-height: 1.2;
+    }
+
+    .prova-content.font-size-large {
+        font-size: 14pt; /* Mantém a fonte maior para impressão */
+        line-height: 1.3;
+    }
+
+    .quiz-result-container p, .quiz-result-container pre {
+        margin-top: 0.4em; /* Ajusta ainda mais o espaçamento na impressão */
+        margin-bottom: 0.4em;
+    }
+
+    .question-code {
+        line-height: 1.1; /* Ainda mais apertado para o código na impressão */
+        padding: 5px; /* Reduz o padding do código */
+        font-size: 0.8em; /* Fonte ainda menor para o código */
+    }
+
+    pre {
+        line-height: 1.1; /* Ajuste para o cabeçalho */
+        margin: 0; /* Remove margem padrão de pre */
+    }
+
+    br {
+        content: ""; /* Impede que <br> cause grandes espaços desnecessários */
+        display: block;
+        margin-bottom: -0.5em; /* Ajusta para reduzir o espaço de quebra de linha */
+    }
+}
+ @media print {
+    /* Oculta elementos com a classe 'print-hidden' ao imprimir */
+    .print-hidden {
+        display: none !important;
+    }
+
+    /* Opcional: Se o link "Voltar ao Formulário" também não deve ser impresso */
+    .back-to-form-link {
+        display: none !important;
+    }
+}

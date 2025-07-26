@@ -1,0 +1,43 @@
+[
+    "gerador_provas/
+├── index.php                 (Ponto de entrada, mais leve)
+├── gerador_de_provas.php     (Lógica de geração de provas)
+├── funcoes_originais.php     (Funções originais do sistema anterior)
+├── app/
+│   ├── controllers/          (Ainda não usado)
+│   ├── views/                (Ainda não usado)
+├── core/                     (Lógica central do sistema, pode ser a pasta `lib` da Sugestão 1)
+│   ├── config.php            (Arquivo com configurações iniciais)
+│   ├── html_helpers.php      (Arquivo com dados do cabeçalho das provas)
+│   └── utils.php             (Carrega e decodifica um arquivo JSON.)
+├── data/                     (Pasta dos arquivos .JSON)
+│   ├── config.json           (Arquivo com configurações dos campos do formulário de configuração)
+│   ├── disciplina_assuntos.json (Arquivo com dados das disciplinas e dos assuntos relacionados a elas.)
+│   ├── estrutura.json        (Este arquivo com a estrutura de pastas)
+│   ├── formato_perguntas.json   (Arquivo com as opções dos formatos de perguntas)
+│   └── turmas.json           (Arquivo com as turmas e a lista de dados  dos estudantes)
+├── modules/                  (Onde cada funcionalidade ou disciplina reside)
+│   ├── prova_generation/     (Módulo principal de geração de provas)
+│   │   ├── generator.php     (Função `processar_geracao_prova` e lógica de orquestração)
+│   │   ├── templates/        (Opcional: pequenos pedaços de HTML para montagem da prova)
+│   │   └── data_access.php   (Funções para carregar dados de prova genéricos)
+│   ├── discipline_bd/        (Módulo específico para a disciplina de Banco de Dados)
+│   │   ├── bd_logic.php      (Funções `gerarProvaBD()`, `gerarCorpoProvaBancoDeDados()`)
+│   │   ├── bd_data.php       (Apenas o array $enunciadosBD)
+│   │   └── bd_config.php     (Configurações específicas de BD, se houver)
+│   ├── discipline_math/      (Módulo específico para Matemática)
+│   │   ├── math_logic.php
+│   │   ├── math_data.php
+│   │   └── math_config.php
+│   └── students/             (Módulo para gerenciar estudantes)
+│       ├── student_data.php  (Funções para carregar/salvar dados de estudantes)
+│       └── ...
+├── public/                   (Arquivos acessíveis diretamente pelo navegador)
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   │   └── script.js
+│   └── img/
+│       └── logo.png
+└── (Outras pastas como `tests/` para testes, `logs/` para logs)"
+]

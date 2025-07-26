@@ -1,0 +1,542 @@
+[
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "FOR",
+        "tipo": "TIPO4",
+        "dificuldade": "facil",
+        "enunciado": "Quantas vezes o seguinte la\u00e7o FOR ser\u00e1 executado?",
+        "codigo": "for($i = 7; $i > 3; $i--) {\n    echo $i;\n}",
+        "resposta": 4
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "FOR",
+        "tipo": "TIPO4",
+        "dificuldade": "facil",
+        "enunciado": "Quantas vezes o seguinte la\u00e7o FOR ser\u00e1 executado?",
+        "codigo": "for($i = 6; $i >= 2; $i--) {\n    echo $i;\n}",
+        "resposta": 4
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "FOR",
+        "tipo": "TIPO2",
+        "dificuldade": "dificil",
+        "enunciado": "Qual deve ser o valor final na condi\u00e7\u00e3o para que o la\u00e7o FOR execute exatamente 2 vezes?",
+        "codigo": "for($i = 8; $i < ______; $i++) {\n    echo $i;\n}",
+        "resposta": 10
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "FOR",
+        "tipo": "TIPO1",
+        "dificuldade": "medio",
+        "enunciado": "Qual deve ser o valor inicial de `$i` para que o la\u00e7o FOR execute exatamente 3 vezes?",
+        "codigo": "for($i = ______; $i >= -8; $i--) {\n    echo $i;\n}",
+        "resposta": 6
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "FOR",
+        "tipo": "TIPO2",
+        "dificuldade": "medio",
+        "enunciado": "Qual deve ser o valor final na condi\u00e7\u00e3o para que o la\u00e7o FOR execute exatamente 2 vezes?",
+        "codigo": "for($i = -8; $i <= ______; $i++) {\n    echo $i;\n}",
+        "resposta": -7
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "FOR",
+        "tipo": "TIPO3",
+        "dificuldade": "medio",
+        "enunciado": "Complete o decremento do la\u00e7o FOR para que ele execute exatamente 4 vezes",
+        "codigo": "for($i = -1; $i >= -10; ______) {\n    echo $i;\n}",
+        "resposta": "$i--"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "FOR",
+        "tipo": "TIPO4",
+        "dificuldade": "medio",
+        "enunciado": "Quantas vezes o seguinte la\u00e7o FOR ser\u00e1 executado?",
+        "codigo": "for($i = -4; $i > -7; $i--) {\n    echo $i;\n}",
+        "resposta": 2
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "FOR",
+        "tipo": "TIPO1",
+        "dificuldade": "medio",
+        "enunciado": "Qual deve ser o valor inicial de `$i` para que o la\u00e7o FOR execute exatamente 0 vezes?",
+        "codigo": "for($i = ______; $i != -10; $i++) {\n    echo $i;\n}",
+        "resposta": -10
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "FOR",
+        "tipo": "TIPO1",
+        "dificuldade": "dificil",
+        "enunciado": "Qual deve ser o valor inicial de `$i` para que o la\u00e7o FOR execute exatamente 1 vezes?",
+        "codigo": "for($i = ______; $i < -4; $i++) {\n    echo $i;\n}",
+        "resposta": -5
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "FOR",
+        "tipo": "TIPO3",
+        "dificuldade": "facil",
+        "enunciado": "Complete o incremento do la\u00e7o FOR para que ele execute exatamente 2 vezes",
+        "codigo": "for($i = -7; $i < 9; ______) {\n    echo $i;\n}",
+        "resposta": "$i++"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "FOR",
+        "tipo": "TIPO3",
+        "dificuldade": "medio",
+        "enunciado": "Complete o incremento do la\u00e7o FOR para que ele execute exatamente 1 vezes",
+        "codigo": "for($i = 8; $i < 10; ______) {\n    echo $i;\n}",
+        "resposta": "$i++"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "FOR",
+        "tipo": "TIPO1",
+        "dificuldade": "dificil",
+        "enunciado": "Qual deve ser o valor inicial de `$i` para que o la\u00e7o FOR execute exatamente 4 vezes?",
+        "codigo": "for($i = ______; $i > -5; $i--) {\n    echo $i;\n}",
+        "resposta": -1
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "FOR",
+        "tipo": "TIPO1",
+        "dificuldade": "facil",
+        "enunciado": "Qual deve ser o valor inicial de `$i` para que o la\u00e7o FOR execute exatamente 2 vezes?",
+        "codigo": "for($i = ______; $i >= -8; $i--) {\n    echo $i;\n}",
+        "resposta": 0
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "FOR",
+        "tipo": "TIPO3",
+        "dificuldade": "medio",
+        "enunciado": "Complete o incremento do la\u00e7o FOR para que ele execute exatamente 3 vezes",
+        "codigo": "for($i = 8; $i <= 9; ______) {\n    echo $i;\n}",
+        "resposta": "$i++"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "FOR",
+        "tipo": "TIPO2",
+        "dificuldade": "dificil",
+        "enunciado": "Qual deve ser o valor final na condi\u00e7\u00e3o para que o la\u00e7o FOR execute exatamente 3 vezes?",
+        "codigo": "for($i = 1; $i <= ______; $i++) {\n    echo $i;\n}",
+        "resposta": 2
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "FOR",
+        "tipo": "TIPO3",
+        "dificuldade": "dificil",
+        "enunciado": "Complete o incremento do la\u00e7o FOR para que ele execute exatamente 3 vezes",
+        "codigo": "for($i = -10; $i <= 3; ______) {\n    echo $i;\n}",
+        "resposta": "$i++"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "FOR",
+        "tipo": "TIPO3",
+        "dificuldade": "medio",
+        "enunciado": "Complete o incremento do la\u00e7o FOR para que ele execute exatamente 1 vezes",
+        "codigo": "for($i = -6; $i < 8; ______) {\n    echo $i;\n}",
+        "resposta": "$i++"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "FOR",
+        "tipo": "TIPO2",
+        "dificuldade": "dificil",
+        "enunciado": "Qual deve ser o valor final na condi\u00e7\u00e3o para que o la\u00e7o FOR execute exatamente 1 vezes?",
+        "codigo": "for($i = -3; $i < ______; $i++) {\n    echo $i;\n}",
+        "resposta": 8
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "FOR",
+        "tipo": "TIPO3",
+        "dificuldade": "facil",
+        "enunciado": "Complete o incremento do la\u00e7o FOR para que ele execute exatamente 3 vezes",
+        "codigo": "for($i = -10; $i < 0; ______) {\n    echo $i;\n}",
+        "resposta": "$i++"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "FOR",
+        "tipo": "TIPO4",
+        "dificuldade": "facil",
+        "enunciado": "Quantas vezes o seguinte la\u00e7o FOR ser\u00e1 executado?",
+        "codigo": "for($i = 7; $i >= -5; $i--) {\n    echo $i;\n}",
+        "resposta": 4
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "WHILE",
+        "tipo": "TIPO4",
+        "dificuldade": "dificil",
+        "enunciado": "Quantas vezes o seguinte la\u00e7o WHILE ser\u00e1 executado?",
+        "codigo": "$i = 7;\nwhile ($i >= -1) {\n    echo $i;\n    $i--;\n}",
+        "resposta": 2
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "WHILE",
+        "tipo": "TIPO3",
+        "dificuldade": "dificil",
+        "enunciado": "Complete o decremento do la\u00e7o WHILE para que ele execute exatamente 4 vezes",
+        "codigo": "$i = 6;\nwhile ($i >= -4) {\n    echo $i;\n    ______;\n}",
+        "resposta": "$i--"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "WHILE",
+        "tipo": "TIPO4",
+        "dificuldade": "dificil",
+        "enunciado": "Quantas vezes o seguinte la\u00e7o WHILE ser\u00e1 executado?",
+        "codigo": "$i = -3;\nwhile ($i <= 9) {\n    echo $i;\n    $i++;\n}",
+        "resposta": 3
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "WHILE",
+        "tipo": "TIPO2",
+        "dificuldade": "dificil",
+        "enunciado": "Qual deve ser o valor final na condi\u00e7\u00e3o para que o la\u00e7o WHILE execute exatamente 4 vezes?",
+        "codigo": "$i = -10;\nwhile ($i < ______) {\n    echo $i;\n    $i++;\n}",
+        "resposta": 3
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "WHILE",
+        "tipo": "TIPO2",
+        "dificuldade": "facil",
+        "enunciado": "Qual deve ser o valor final na condi\u00e7\u00e3o para que o la\u00e7o WHILE execute exatamente 2 vezes?",
+        "codigo": "$i = 5;\nwhile ($i >= ______) {\n    echo $i;\n    $i--;\n}",
+        "resposta": -5
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "WHILE",
+        "tipo": "TIPO3",
+        "dificuldade": "medio",
+        "enunciado": "Complete o decremento do la\u00e7o WHILE para que ele execute exatamente 3 vezes",
+        "codigo": "$i = 4;\nwhile ($i >= -4) {\n    echo $i;\n    ______;\n}",
+        "resposta": "$i--"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "WHILE",
+        "tipo": "TIPO4",
+        "dificuldade": "medio",
+        "enunciado": "Quantas vezes o seguinte la\u00e7o WHILE ser\u00e1 executado?",
+        "codigo": "$i = 2;\nwhile ($i <= 5) {\n    echo $i;\n    $i++;\n}",
+        "resposta": 3
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "WHILE",
+        "tipo": "TIPO2",
+        "dificuldade": "medio",
+        "enunciado": "Qual deve ser o valor final na condi\u00e7\u00e3o para que o la\u00e7o WHILE execute exatamente 3 vezes?",
+        "codigo": "$i = 4;\nwhile ($i >= ______) {\n    echo $i;\n    $i--;\n}",
+        "resposta": 1
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "WHILE",
+        "tipo": "TIPO3",
+        "dificuldade": "facil",
+        "enunciado": "Complete o incremento do la\u00e7o WHILE para que ele execute exatamente 4 vezes",
+        "codigo": "$i = -8;\nwhile ($i < 3) {\n    echo $i;\n    ______;\n}",
+        "resposta": "$i++"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "WHILE",
+        "tipo": "TIPO2",
+        "dificuldade": "dificil",
+        "enunciado": "Qual deve ser o valor final na condi\u00e7\u00e3o para que o la\u00e7o WHILE execute exatamente 2 vezes?",
+        "codigo": "$i = -9;\nwhile ($i < ______) {\n    echo $i;\n    $i++;\n}",
+        "resposta": 8
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "WHILE",
+        "tipo": "TIPO3",
+        "dificuldade": "facil",
+        "enunciado": "Complete o incremento do la\u00e7o WHILE para que ele execute exatamente 2 vezes",
+        "codigo": "$i = 1;\nwhile ($i <= 10) {\n    echo $i;\n    ______;\n}",
+        "resposta": "$i++"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "WHILE",
+        "tipo": "TIPO3",
+        "dificuldade": "dificil",
+        "enunciado": "Complete o decremento do la\u00e7o WHILE para que ele execute exatamente 3 vezes",
+        "codigo": "$i = 8;\nwhile ($i >= 3) {\n    echo $i;\n    ______;\n}",
+        "resposta": "$i--"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "WHILE",
+        "tipo": "TIPO1",
+        "dificuldade": "facil",
+        "enunciado": "Qual deve ser o valor inicial de `$i` para que o la\u00e7o WHILE execute exatamente 3 vezes?",
+        "codigo": "$i = ______;\nwhile ($i > 3) {\n    echo $i;\n    $i--;\n}",
+        "resposta": 10
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "WHILE",
+        "tipo": "TIPO3",
+        "dificuldade": "medio",
+        "enunciado": "Complete o incremento do la\u00e7o WHILE para que ele execute exatamente 2 vezes",
+        "codigo": "$i = -3;\nwhile ($i < 8) {\n    echo $i;\n    ______;\n}",
+        "resposta": "$i++"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "WHILE",
+        "tipo": "TIPO4",
+        "dificuldade": "facil",
+        "enunciado": "Quantas vezes o seguinte la\u00e7o WHILE ser\u00e1 executado?",
+        "codigo": "$i = 8;\nwhile ($i > 0) {\n    echo $i;\n    $i--;\n}",
+        "resposta": 4
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "WHILE",
+        "tipo": "TIPO1",
+        "dificuldade": "medio",
+        "enunciado": "Qual deve ser o valor inicial de `$i` para que o la\u00e7o WHILE execute exatamente 2 vezes?",
+        "codigo": "$i = ______;\nwhile ($i > -8) {\n    echo $i;\n    $i--;\n}",
+        "resposta": -7
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "WHILE",
+        "tipo": "TIPO3",
+        "dificuldade": "dificil",
+        "enunciado": "Complete o incremento do la\u00e7o WHILE para que ele execute exatamente 3 vezes",
+        "codigo": "$i = -3;\nwhile ($i < 4) {\n    echo $i;\n    ______;\n}",
+        "resposta": "$i++"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "WHILE",
+        "tipo": "TIPO3",
+        "dificuldade": "facil",
+        "enunciado": "Complete o decremento do la\u00e7o WHILE para que ele execute exatamente 1 vezes",
+        "codigo": "$i = 10;\nwhile ($i > 4) {\n    echo $i;\n    ______;\n}",
+        "resposta": "$i--"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "WHILE",
+        "tipo": "TIPO1",
+        "dificuldade": "medio",
+        "enunciado": "Qual deve ser o valor inicial de `$i` para que o la\u00e7o WHILE execute exatamente 3 vezes?",
+        "codigo": "$i = ______;\nwhile ($i >= -8) {\n    echo $i;\n    $i--;\n}",
+        "resposta": 9
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "WHILE",
+        "tipo": "TIPO4",
+        "dificuldade": "dificil",
+        "enunciado": "Quantas vezes o seguinte la\u00e7o WHILE ser\u00e1 executado?",
+        "codigo": "$i = 6;\nwhile ($i != 6) {\n    echo $i;\n    $i++;\n}",
+        "resposta": 0
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "DO-WHILE",
+        "tipo": "TIPO2",
+        "dificuldade": "medio",
+        "enunciado": "Qual deve ser o valor final na condi\u00e7\u00e3o para que o la\u00e7o DO-WHILE execute exatamente 3 vezes?",
+        "codigo": "$i = -3;\ndo {\n    echo $i;\n    $i++;\n} while ($i <= ______);",
+        "resposta": 3
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "DO-WHILE",
+        "tipo": "TIPO3",
+        "dificuldade": "dificil",
+        "enunciado": "Complete o decremento do la\u00e7o DO-WHILE para que ele execute exatamente 4 vezes",
+        "codigo": "$i = 3;\ndo {\n    echo $i;\n    ______;\n} while ($i >= -8);",
+        "resposta": "$i--"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "DO-WHILE",
+        "tipo": "TIPO2",
+        "dificuldade": "dificil",
+        "enunciado": "Qual deve ser o valor final na condi\u00e7\u00e3o para que o la\u00e7o DO-WHILE execute exatamente 4 vezes?",
+        "codigo": "$i = -1;\ndo {\n    echo $i;\n    $i++;\n} while ($i <= ______);",
+        "resposta": 4
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "DO-WHILE",
+        "tipo": "TIPO3",
+        "dificuldade": "medio",
+        "enunciado": "Complete o incremento do la\u00e7o DO-WHILE para que ele execute exatamente 3 vezes",
+        "codigo": "$i = -6;\ndo {\n    echo $i;\n    ______;\n} while ($i <= 7);",
+        "resposta": "$i++"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "DO-WHILE",
+        "tipo": "TIPO3",
+        "dificuldade": "dificil",
+        "enunciado": "Complete o decremento do la\u00e7o DO-WHILE para que ele execute exatamente 3 vezes",
+        "codigo": "$i = -2;\ndo {\n    echo $i;\n    ______;\n} while ($i >= -7);",
+        "resposta": "$i--"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "DO-WHILE",
+        "tipo": "TIPO3",
+        "dificuldade": "dificil",
+        "enunciado": "Complete o incremento do la\u00e7o DO-WHILE para que ele execute exatamente 1 vezes",
+        "codigo": "$i = -1;\ndo {\n    echo $i;\n    ______;\n} while ($i < 4);",
+        "resposta": "$i++"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "DO-WHILE",
+        "tipo": "TIPO1",
+        "dificuldade": "dificil",
+        "enunciado": "Qual deve ser o valor inicial de `$i` para que o la\u00e7o DO-WHILE execute exatamente 4 vezes?",
+        "codigo": "$i = ______;\ndo {\n    echo $i;\n    $i++;\n} while ($i <= 6);",
+        "resposta": -6
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "DO-WHILE",
+        "tipo": "TIPO4",
+        "dificuldade": "medio",
+        "enunciado": "Quantas vezes o seguinte la\u00e7o DO-WHILE ser\u00e1 executado?",
+        "codigo": "$i = -9;\ndo {\n    echo $i;\n    $i++;\n} while ($i <= -4);",
+        "resposta": 3
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "DO-WHILE",
+        "tipo": "TIPO3",
+        "dificuldade": "facil",
+        "enunciado": "Complete o decremento do la\u00e7o DO-WHILE para que ele execute exatamente 3 vezes",
+        "codigo": "$i = -1;\ndo {\n    echo $i;\n    ______;\n} while ($i >= -5);",
+        "resposta": "$i--"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "DO-WHILE",
+        "tipo": "TIPO3",
+        "dificuldade": "medio",
+        "enunciado": "Complete o incremento do la\u00e7o DO-WHILE para que ele execute exatamente 2 vezes",
+        "codigo": "$i = -1;\ndo {\n    echo $i;\n    ______;\n} while ($i <= 9);",
+        "resposta": "$i++"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "DO-WHILE",
+        "tipo": "TIPO3",
+        "dificuldade": "medio",
+        "enunciado": "Complete o decremento do la\u00e7o DO-WHILE para que ele execute exatamente 3 vezes",
+        "codigo": "$i = 7;\ndo {\n    echo $i;\n    ______;\n} while ($i > 5);",
+        "resposta": "$i--"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "DO-WHILE",
+        "tipo": "TIPO1",
+        "dificuldade": "dificil",
+        "enunciado": "Qual deve ser o valor inicial de `$i` para que o la\u00e7o DO-WHILE execute exatamente 3 vezes?",
+        "codigo": "$i = ______;\ndo {\n    echo $i;\n    $i--;\n} while ($i > -1);",
+        "resposta": 8
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "DO-WHILE",
+        "tipo": "TIPO2",
+        "dificuldade": "facil",
+        "enunciado": "Qual deve ser o valor final na condi\u00e7\u00e3o para que o la\u00e7o DO-WHILE execute exatamente 3 vezes?",
+        "codigo": "$i = 4;\ndo {\n    echo $i;\n    $i--;\n} while ($i >= ______);",
+        "resposta": -6
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "DO-WHILE",
+        "tipo": "TIPO3",
+        "dificuldade": "dificil",
+        "enunciado": "Complete o decremento do la\u00e7o DO-WHILE para que ele execute exatamente 4 vezes",
+        "codigo": "$i = 7;\ndo {\n    echo $i;\n    ______;\n} while ($i >= -9);",
+        "resposta": "$i--"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "DO-WHILE",
+        "tipo": "TIPO3",
+        "dificuldade": "medio",
+        "enunciado": "Complete o decremento do la\u00e7o DO-WHILE para que ele execute exatamente 2 vezes",
+        "codigo": "$i = -9;\ndo {\n    echo $i;\n    ______;\n} while ($i > -10);",
+        "resposta": "$i--"
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "DO-WHILE",
+        "tipo": "TIPO4",
+        "dificuldade": "dificil",
+        "enunciado": "Quantas vezes o seguinte la\u00e7o DO-WHILE ser\u00e1 executado?",
+        "codigo": "$i = -7;\ndo {\n    echo $i;\n    $i++;\n} while ($i <= 6);",
+        "resposta": 2
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "DO-WHILE",
+        "tipo": "TIPO2",
+        "dificuldade": "facil",
+        "enunciado": "Qual deve ser o valor final na condi\u00e7\u00e3o para que o la\u00e7o DO-WHILE execute exatamente 2 vezes?",
+        "codigo": "$i = -1;\ndo {\n    echo $i;\n    $i++;\n} while ($i < ______);",
+        "resposta": 4
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "DO-WHILE",
+        "tipo": "TIPO4",
+        "dificuldade": "medio",
+        "enunciado": "Quantas vezes o seguinte la\u00e7o DO-WHILE ser\u00e1 executado?",
+        "codigo": "$i = 5;\ndo {\n    echo $i;\n    $i--;\n} while ($i >= 1);",
+        "resposta": 4
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "DO-WHILE",
+        "tipo": "TIPO4",
+        "dificuldade": "medio",
+        "enunciado": "Quantas vezes o seguinte la\u00e7o DO-WHILE ser\u00e1 executado?",
+        "codigo": "$i = -6;\ndo {\n    echo $i;\n    $i--;\n} while ($i > -7);",
+        "resposta": 4
+    },
+    {
+        "disciplina": "L\u00f3gica de Programa\u00e7\u00e3o",
+        "assunto": "DO-WHILE",
+        "tipo": "TIPO4",
+        "dificuldade": "dificil",
+        "enunciado": "Quantas vezes o seguinte la\u00e7o DO-WHILE ser\u00e1 executado?",
+        "codigo": "$i = -7;\ndo {\n    echo $i;\n    $i++;\n} while ($i <= -2);",
+        "resposta": 2
+    }
+]
