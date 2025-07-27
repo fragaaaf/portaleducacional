@@ -19,10 +19,10 @@ require_once __DIR__ . '/../../core/utils.php'; // Para sanitizar_dados e htmlsp
  * @return array Um array de objetos de questão.
  */
 function gerar_questoes_adaptadas(
-    int $quantidade,
-    array $assuntos_selecionados_form,
-    array $formatos_selecionados_form,
-    array $subtipos_resposta_aberta_selecionados_form
+    int $quantidade,  // $num_questoes,
+    array $assuntos_selecionados_form, // $assuntos_laco_para_gerar,
+    array $formatos_selecionados_form,  //  $formatos_selecionados_form,
+    array $subtipos_resposta_aberta_selecionados_form // $subtipos_resposta_aberta_selecionados_form
 ): array {
     $questoes = [];
     $tipos_laco_disponiveis = []; // FOR, WHILE, DO-WHILE baseados nos assuntos selecionados

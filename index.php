@@ -11,13 +11,17 @@ $config_json = carregar_json($app_config['data_files']['config']);
 $turmas_info_completa = carregar_json($app_config['data_files']['turmas']);
 
 $disciplina_assuntos_info_completa = carregar_json($app_config['data_files']['disciplina_assuntos']);
-$formatos_perguntas_disponiveis = carregar_json($app_config['data_files']['formato_perguntas']);
+$formatos_perguntas_disponiveis = json_decode(file_get_contents(__DIR__.'../data/formato_perguntas.json'), true);
+//$formatos_perguntas_disponiveis = carregar_json($app_config['data_files']['formato_perguntas']);
 
 $formulario_campos = $config_json['formulario_campos'] ?? [];
 $configs_gerais = $config_json['configs_gerais'] ?? [];
-///echo "<pre>"; 
-///print_r($turmas_info_completa);
-///echo "</pre>"; 
+//====>> DEBUG <<==
+$vetor1 = $formulario_campos[4];
+echo "<pre>";print_r($vetor1);echo "</pre>";
+$vetor2 = $formatos_perguntas_disponiveis;
+echo "<pre>";print_r($vetor2);echo "</pre>";
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -67,7 +71,7 @@ $configs_gerais = $config_json['configs_gerais'] ?? [];
                             <?php
                             break;
                         case 'radio': // Mantido para campos de rádio simples como 'turma'
-                            //<!-- ============ TURMA =============== -->
+                        //<!-- ============ TURMA =============== -->
                             if ($id === 'turma') {
                                 /*
                                 foreach ($turmas_info_completa as $turma_id_opt => $turma_data) {
@@ -99,7 +103,7 @@ $configs_gerais = $config_json['configs_gerais'] ?? [];
                             break;
                         case 'radio_group':
                             $current_options = [];
-                            //<!-- ============ DISCIPLINA =============== -->
+                        //<!-- ============ DISCIPLINA =============== -->
                             if ($id === 'disciplina') {
                                 // Usa $disciplina_assuntos_info_completa para gerar os radios
                                 // Dentro do case 'radio_group' (disciplina):
@@ -118,14 +122,14 @@ $configs_gerais = $config_json['configs_gerais'] ?? [];
                             }
                             break;    
                         case 'checkbox_group_dynamic':
-                            //<!-- ============ CHECKBOX SELECIONAR TODOS =============== -->
+                        //<!-- ============ CHECKBOX SELECIONAR TODOS =============== -->
                             // ucfirst — Transforma o primeiro caractere de uma string em maiúsculo
                             echo '<label class="select-all-label" id="selecionarTodos' . ucfirst($id) . 'Label">';
                             echo '<input type="checkbox" id="selecionarTodos' . ucfirst($id) . '"> ' . htmlspecialchars($campo['select_all_label'] ?? 'Selecionar Todos');
                             echo '</label>';
 
                             echo '<div id="' . $id . '-list-container" class="dynamic-group-container">';
-                            //<!-- ============ ESTUDANTES =============== -->
+                        //<!-- ============ ESTUDANTES =============== -->
                             if ($id === 'estudantes') {
                                 foreach ($turmas_info_completa as $turma) {
                                     $turma_id = htmlspecialchars($turma['id']);
@@ -138,27 +142,43 @@ $configs_gerais = $config_json['configs_gerais'] ?? [];
                                     }
                                 }
                             } 
-                            //<!-- ============ ASSUNTOS =============== -->
-                             elseif ($id === 'assuntos') {
+                        //<!-- ============ ASSUNTOS =============== -->
+                            elseif ($id === 'assuntos') {
                                 foreach ($disciplina_assuntos_info_completa as $disciplina_data) {
                                     $disciplina_id = htmlspecialchars($disciplina_data['id']);
-                                    if (isset($disciplina_data['assuntos']) && is_array($disciplina_data['assuntos'])) {
-                                        foreach ($disciplina_data['assuntos'] as $index => $assunto) {
-                                            echo '<label data-disciplina-id="' . $disciplina_id . '" style="display: none;">';
-                                            echo '<input type="checkbox" name="assuntos[]" value="' . $index . '" class="assunto-checkbox"> ' . htmlspecialchars($assunto);
+                                    if (isset($disciplina_data['assuntos'])) {
+                                        foreach ($disciplina_data['assuntos'] as $assunto) {
+                                            echo '<label data-disciplina-id="'.$disciplina_id.'">';
+                                            echo '<input type="checkbox" name="assuntos[]" value="'.htmlspecialchars($assunto).'" class="assunto-checkbox"> ';
+                                            echo htmlspecialchars($assunto);
                                             echo '</label>';
                                         }
                                     }
                                 }
                             }
-                            //<!-- ============ FORMATOS DE PERGUNTAS =============== -->
+                        //<!-- ============ FORMATOS DE PERGUNTAS =============== -->
                              elseif ($id === 'formatosPerguntas') { // AGORA MATCHES config.json ID (plural)
                                 // Este é o bloco para Formatos de Perguntas dinâmico
+                               // No trecho onde gera os checkboxes de formatosPerguntas
+                               /* foreach ($formatos_perguntas_disponiveis as $id => $label) {
+                                     echo '<input type="checkbox" name="formatosPerguntas[]" value="'.htmlspecialchars($id).'">';
+                                } 
+                                
+                               foreach ($formatos_perguntas_disponiveis as $formato_id => $formato_label) {
+                                    echo '<label>';
+                                    // Modifique para enviar $formato_id em vez do índice numérico
+                                    echo '<input type="checkbox" name="formatosPerguntas[]" value="'.htmlspecialchars($formato_id).'">';
+                                    echo htmlspecialchars($formato_label);
+                                    echo '</label>';
+                                }
+                                
+                                */
                                 foreach ($formatos_perguntas_disponiveis as $formato_id => $formato_label) {
                                     echo '<label>';
                                     echo '<input type="checkbox" name="formatosPerguntas[]" value="' . htmlspecialchars($formato_id) . '" class="formato-pergunta-checkbox"> ' . htmlspecialchars($formato_label);
                                     echo '</label>';
                                 }
+                                
                             //<!-- ============ SUBTIPOS DE RESPOSTA ABERTA =============== -->
                             } elseif ($id === 'subtiposRespostaAberta') {
                                 $subtipos_ra_options = $campo['options'] ?? [];

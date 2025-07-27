@@ -17,11 +17,13 @@ require_once __DIR__ . '/../students/student_model.php'; // Para get_estudantes_
  * @return string Uma string formatada com os detalhes da prova.
  */
 function processar_geracao_prova(
-    array $dados_validados,
-    array $turmas_info_completa,
-    array $disciplina_assuntos_info_completa,
-    array $configuracoes
+    array $dados_validados, //  $resultado_validacao['dados_validados'],
+    array $turmas_info_completa,  // $turmas_info_completa,
+    array $disciplina_assuntos_info_completa,  //$disciplina_assuntos_info_completa,
+    array $configuracoes  // $config_json 
 ): string {
+    //DEBUG
+    //ECHO "<PRE>Dados validados para geração: \n" . print_r($dados_validados, true))."</pre>";
     // Extrai dados validados
     $turma_id = $dados_validados['turma'] ?? '';
     $estudantes_selecionados_obj = $dados_validados['estudantes'] ?? [];
@@ -36,7 +38,7 @@ function processar_geracao_prova(
     $gabarito_geral = $dados_validados['gabaritoGeral']; 
     $folha_resposta = $dados_validados['folhaResposta'];
     $num_questoes = $dados_validados['numQuestoes']; 
-
+echo '$turma_id'.$turma_id;
     // Mapeamentos para nomes legíveis
     $niveis_dificuldade_map = $configuracoes['formulario_campos'][array_search('dificuldade', array_column($configuracoes['formulario_campos'], 'id'))]['options'] ?? [];
     $tipos_prova_map = $configuracoes['formulario_campos'][array_search('tipoProva', array_column($configuracoes['formulario_campos'], 'id'))]['options'] ?? [];
@@ -253,7 +255,7 @@ function processar_geracao_prova(
             if ($np === 0) {
                 $RespostaGeral[0] = $respostas_prova_atual; // Armazena o objeto completo da prova
             }
-        } else {
+            } else {
             // Para outros tipos, armazena o gabarito de cada prova individual
             $RespostaGeral[$np] = $respostas_prova_atual; // Armazena o objeto completo da prova
         }
@@ -273,45 +275,45 @@ function processar_geracao_prova(
     }
 
     // B) GERAR ATA DE PRESENÇA
-    $saida .= "<div class='quebra-de-pagina'></div>";
-    $saida .= "<div class='attendance-sheet'>";
-    $saida .= "<pre style='margin-bottom: 0;'>"; // Estilo para evitar margem extra antes do título
-    $saida .= sanitizar_dados($cabecalho_template['escola']) . "<br>";
-    $saida .= "Curso: " . sanitizar_dados($cabecalho_template['curso']) . "    Professor: " . sanitizar_dados($cabecalho_template['professor']) . "<br>";
-    $saida .= "Turma: " . sanitizar_dados($nome_turma) . "    Disciplina: " . sanitizar_dados($nome_disciplina) . "<br>";
-    $saida .= "Data: " . $data_prova_str . "    Aplicador: ____________________________________________________<br>";
-    $saida .= "</pre>";
-    $saida .= "<h2 style='display: block; text-align: center; margin: 0 auto;'>ATA DE PRESENÇA</h2>";
-    //$saida .= "<h2 style='text-align: center; margin-top: 10px;'>ATA DE PRESENÇA</h2>";
-    $saida .= "<table border='1' style='width:100%; border-collapse: collapse; font-size: 11pt;'>"; // Font size 11pt
-    $saida .= "<thead><tr><th>Nº</th><th>Nome Completo</th><th>Matrícula</th><th>Assinatura</th></tr></thead>"; // Data column removed
-    $saida .= "<tbody>";
-    
-    // b) A lista de presença deve constar apenas os nomes dos estudantes selecionados.
-    // Ordena os estudantes selecionados pelo nome completo para a ata
-    usort($estudantes_selecionados_obj, function($a, $b) {
-        return strcmp($a['nome_completo'], $b['nome_completo']);
-    });
+        $saida .= "<div class='quebra-de-pagina'></div>";
+        $saida .= "<div class='attendance-sheet'>";
+        $saida .= "<pre style='margin-bottom: 0;'>"; // Estilo para evitar margem extra antes do título
+        $saida .= sanitizar_dados($cabecalho_template['escola']) . "<br>";
+        $saida .= "Curso: " . sanitizar_dados($cabecalho_template['curso']) . "    Professor: " . sanitizar_dados($cabecalho_template['professor']) . "<br>";
+        $saida .= "Turma: " . sanitizar_dados($nome_turma) . "    Disciplina: " . sanitizar_dados($nome_disciplina) . "<br>";
+        $saida .= "Data: " . $data_prova_str . "    Aplicador: ____________________________________________________<br>";
+        $saida .= "</pre>";
+        $saida .= "<h2 style='display: block; text-align: center; margin: 0 auto;'>ATA DE PRESENÇA</h2>";
+        //$saida .= "<h2 style='text-align: center; margin-top: 10px;'>ATA DE PRESENÇA</h2>";
+        $saida .= "<table border='1' style='width:100%; border-collapse: collapse; font-size: 11pt;'>"; // Font size 11pt
+        $saida .= "<thead><tr><th>Nº</th><th>Nome Completo</th><th>Matrícula</th><th>Assinatura</th></tr></thead>"; // Data column removed
+        $saida .= "<tbody>";
+        
+        // b) A lista de presença deve constar apenas os nomes dos estudantes selecionados.
+        // Ordena os estudantes selecionados pelo nome completo para a ata
+        usort($estudantes_selecionados_obj, function($a, $b) {
+            return strcmp($a['nome_completo'], $b['nome_completo']);
+        });
 
-    if (!empty($estudantes_selecionados_obj)) {
-        foreach ($estudantes_selecionados_obj as $idx => $estudante_selecionado) {
-            $saida .= "<tr>";
-            $saida .= "<td>" . ($idx + 1) . "</td>";
-            $saida .= "<td>" . htmlspecialchars($estudante_selecionado['nome_completo']) . "</td>";
-            $saida .= "<td>" . htmlspecialchars($estudante_selecionado['matricula']) . "</td>";
-            $saida .= "<td style='width: 45%;'>&nbsp;</td>"; // Assinatura expandida, absorvendo espaço da data
-            $saida .= "</tr>";
+        if (!empty($estudantes_selecionados_obj)) {
+            foreach ($estudantes_selecionados_obj as $idx => $estudante_selecionado) {
+                $saida .= "<tr>";
+                $saida .= "<td>" . ($idx + 1) . "</td>";
+                $saida .= "<td>" . htmlspecialchars($estudante_selecionado['nome_completo']) . "</td>";
+                $saida .= "<td>" . htmlspecialchars($estudante_selecionado['matricula']) . "</td>";
+                $saida .= "<td style='width: 45%;'>&nbsp;</td>"; // Assinatura expandida, absorvendo espaço da data
+                $saida .= "</tr>";
+            }
+        } else {
+            $saida .= "<tr><td colspan='4'>Nenhum estudante selecionado para esta prova.</td></tr>";
         }
-    } else {
-        $saida .= "<tr><td colspan='4'>Nenhum estudante selecionado para esta prova.</td></tr>";
-    }
 
-    $saida .= "</tbody>";
-    $saida .= "</table>";
-    $saida .= "</div>"; // Fecha attendance-sheet
+        $saida .= "</tbody>";
+        $saida .= "</table>";
+        $saida .= "</div>"; // Fecha attendance-sheet
 
     // Exibir Gabarito Geral (para todas as provas ou único para "Por Turma")
-    if ($gabarito_geral) {
+        if ($gabarito_geral) {
         $saida .= "<div class='quebra-de-pagina'></div>";
         $saida .= "<h2>Gabarito Geral:</h2>";
         // Se for "Por Turma", $RespostaGeral terá apenas um elemento
@@ -334,12 +336,12 @@ function processar_geracao_prova(
             }
             $saida .= "</p>";
         }
-    }
+        }
 
     // Adicionar a folha de respostas ao final, se solicitado
-    if ($folha_resposta && !empty($saida_folha_respostas)) {
-        $saida .= $saida_folha_respostas;
-    }
+        if ($folha_resposta && !empty($saida_folha_respostas)) {
+            $saida .= $saida_folha_respostas;
+        }
 
     $saida .= "</div>"; // Fecha quiz-result-container
     return $saida;

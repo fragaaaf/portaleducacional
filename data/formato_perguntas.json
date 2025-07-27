@@ -1,8 +1,8 @@
-[
-    "Múltipla Escolha",
-    "Verdadeiro ou Falso",
-    "Complete o Código",
-    "Identifique o Erro",
-    "Desenvolvimento",
-    "Resposta Aberta"
-]
+{
+    "multipla_escolha": "Múltipla Escolha",
+    "verdadeiro_falso": "Verdadeiro ou Falso",
+    "complete_codigo": "Complete o Código",
+    "identifique_erro": "Identifique o Erro",
+    "desenvolvimento": "Desenvolvimento",
+    "resposta_aberta": "Resposta Aberta"
+}
